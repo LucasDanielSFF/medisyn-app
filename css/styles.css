@@ -281,3 +281,7 @@ body.modo-claro .closebtn {
 #medication-list .card-medicamento {
   padding: 0;
 }
+
+.card-medicamento:not(.allow-remove) .btn-remove-card {
+  display: none;
+}

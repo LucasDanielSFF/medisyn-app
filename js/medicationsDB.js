@@ -93,7 +93,18 @@ const medKeysBolus = Object.keys(medicationsDB).filter(key => medicationsDB[key]
 const medKeysInfusion = Object.keys(medicationsDB).filter(key => medicationsDB[key].admtype?.infusion);
 
 const configCardsPorAba = {
-  infusion: ['fentanil', 'dexmedetomidina', 'midazolam'],
-  bolus:    ['fentanil', 'midazolam'],
+  sri: [
+    { key: 'fentanil', type: 'infusion' }, // Força tipo específico se necessário
+    { key: 'midazolam', type: 'bolus' }
+  ],
+  infusion: [
+    { key: 'fentanil', type: 'infusion' },
+    { key: 'dexmedetomidina', type: 'infusion' },
+    { key: 'midazolam', type: 'infusion' }
+  ],
+  bolus:    [
+    { key: 'fentanil', type: 'bolus' },
+    { key: 'midazolam', type: 'bolus' }
+  ],
   universal: []
 };
