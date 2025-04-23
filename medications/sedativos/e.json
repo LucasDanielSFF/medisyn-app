@@ -1,0 +1,18 @@
+{
+  "etodolaco": {
+    "id": "etodolaco",
+    "name": "Etodolaco",
+    "nome_generico": "Etodolaco",
+    "classe_terapeutica": "Anti-inflamatório não esteroidal (AINE)",
+    "mecanismo_acao": "Inibe seletivamente a COX-2, reduzindo inflamação e dor.",
+    "farmacocinetica": "Bem absorvido por via oral. Metabolismo hepático. Eliminação renal e fecal.",
+    "posologia_adulto": "200-400 mg a cada 6-8h. Dose máxima: 1200 mg/dia.",
+    "posologia_pediatrica": "Não recomendado para crianças menores de 6 anos.",
+    "reconstituicao": "Uso oral. Comprimido revestido.",
+    "ajuste_dose": "Usar com cautela em insuficiência hepática ou renal.",
+    "uso_gestacao": "Evitar no terceiro trimestre (risco de fechamento do ducto arterioso).",
+    "uso_lactacao": "Não recomendado durante a amamentação.",
+    "interacoes": "Risco aumentado de sangramento com anticoagulantes. Potencializa toxicidade renal de IECA.",
+    "observacoes_gerais": "Usar com alimentos para reduzir irritação gástrica. Monitorar função renal em uso prolongado."
+  }
+}

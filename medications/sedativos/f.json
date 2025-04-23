@@ -1,0 +1,10 @@
+{
+  "fentanil": {
+    "name": "Fentanil",
+    "classe_terapeutica": "Opioide analgésico",
+    "admtype": {
+      "bolus": {},
+      "infusion": {}
+    }
+  }
+}

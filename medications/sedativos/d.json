@@ -1,0 +1,9 @@
+{
+  "dexmedetomidina": {
+    "name": "Dexmedetomidina",
+    "classe_terapeutica": "Sedativo agonista alfa-2 adrenérgico",
+    "admtype": {
+      "infusion": {}
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "clonazepam": {
+    "id": "clonazepam",
+    "name": "Clonazepam",
+    "nome_generico": "Clonazepam",
+    "classe_terapeutica": "Benzodiazepínico sedativo/ansiolítico",
+    "mecanismo_acao": "Potencializa o efeito do GABA no SNC, promovendo efeito anticonvulsivante, ansiolítico e sedativo.",
+    "farmacocinetica": "Alta biodisponibilidade oral, metabolização hepática e excreção renal. Meia-vida de 30-40h.",
+    "posologia_adulto": "Iniciar com 0,25-0,5 mg 2 vezes ao dia. Ajustar até controle clínico (máx. 20 mg/dia).",
+    "posologia_pediatrica": "0,01-0,03 mg/kg/dia divididos em 2-3 doses. Ajustar conforme resposta clínica.",
+    "reconstituicao": "Disponível em comprimidos, solução oral e injetável.",
+    "ajuste_dose": "Reduzir em idosos e insuficiência hepática.",
+    "uso_gestacao": "Categoria D – pode causar malformações. Usar somente se imprescindível.",
+    "uso_lactacao": "Excretado no leite. Pode causar sedação no bebê. Evitar ou monitorar.",
+    "interacoes": "Potencializa depressores do SNC. Interação com álcool, opioides e anticonvulsivantes.",
+    "observacoes_gerais": "Risco de tolerância e dependência com uso prolongado. Evitar suspensão abrupta."
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "bupivacaina": {
+    "id": "bupivacaina",
+    "name": "Bupivacaína",
+    "nome_generico": "Cloridrato de Bupivacaína",
+    "classe_terapeutica": "Anestésico local",
+    "mecanismo_acao": "Bloqueia canais de sódio, inibindo condução nervosa.",
+    "farmacocinetica": "Início de ação em 5-10 minutos. Metabolismo hepático. Eliminação renal.",
+    "posologia_adulto": "Dose depende da técnica: 2-20 mL de solução a 0,25%-0,5%. Máximo 175 mg por dose.",
+    "posologia_pediatrica": "Dose reduzida proporcional ao peso. Ex: 0,5-1 mg/kg.",
+    "reconstituicao": "Pronta para uso. Soluções a 0,25%, 0,5% e 0,75%.",
+    "ajuste_dose": "Cautela em insuficiência hepática ou cardiovascular.",
+    "uso_gestacao": "Usada com cautela. Atravessa placenta.",
+    "uso_lactacao": "Compatível com a amamentação.",
+    "interacoes": "Potencializa bloqueadores neuromusculares. Cautela com antiarrítmicos.",
+    "observacoes_gerais": "Monitorar sinais de toxicidade sistêmica (convulsões, arritmias). Usar solução com epinefrina com cautela."
+  }
+}

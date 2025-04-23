@@ -1,0 +1,10 @@
+{
+  "midazolam": {
+    "name": "Midazolam",
+    "classe_terapeutica": "Benzodiazepínico sedativo/hipnótico",
+    "admtype": {
+      "bolus": {},
+      "infusion": {}
+    }
+  }
+}

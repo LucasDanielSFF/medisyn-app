@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#007acc">
+  <link rel="manifest" href="manifest.json">
+  <title>Medisyn</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+  <!-- Botão do menu lateral (hamburger) -->
+  <button class="hamburger-btn" onclick="openNav()">☰</button>
+
+  <!-- Menu lateral retrátil -->
+  <nav id="sidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="index.html">Página Inicial</a>
+    <a href="calculadora.html">Calculadora</a>
+    <a href="medicamentos.html">Medicamentos</a>
+    <a href="protocolos.html">Protocolos</a>
+    <button class="btn btn-toggle-mode btn-universal" onclick="toggleModoClaro()">🌓 Alternar Modo</button>
+  </nav>
+
+  <!-- Overlay para escurecer conteúdo ao abrir o menu -->
+  <div class="overlay" onclick="closeNav()"></div>
+
+  <div class="container py-5 text-center">
+    <h1 class="mb-4">Medisyn</h1>
+    <div class="d-grid gap-3 col-6 mx-auto">
+      <a href="calculadora.html" class="btn btn-universal btn-lg">Calculadoras</a>
+      <a href="medicamentos.html" class="btn btn-universal btn-lg">Medicamentos</a>
+      <a href="protocolos.html" class="btn btn-universal btn-lg">Protocolos</a>
+    </div>
+  </div>
+
+  <script>
+    // Detecção de tema preferido do usuário ao carregar
+    const temaSalvo = localStorage.getItem('tema');
+    if (temaSalvo) {
+      if (temaSalvo === 'claro') document.body.classList.add('modo-claro');
+    } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+      document.body.classList.add('modo-claro');
+    }
+
+    // Funções para abrir/fechar o menu lateral
+    function openNav() {
+      document.getElementById('sidenav').classList.add('open');
+    }
+    function closeNav() {
+      document.getElementById('sidenav').classList.remove('open');
+    }
+    // Função de alternância de tema (claro/escuro) com persistência
+    function toggleModoClaro() {
+      const modoClaroAtivo = document.body.classList.toggle('modo-claro');
+      localStorage.setItem('tema', modoClaroAtivo ? 'claro' : 'escuro');
+    }
+  </script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('service-worker.js');
+      });
+    }
+  </script>
+</body>
+</html>

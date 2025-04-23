@@ -1,0 +1,283 @@
+:root {
+  /* Modo escuro – paleta de cores inspirada no ChatGPT */
+  --bg-dark: #1e1e1e;         /* fundo de principal (cinza profundo) */
+  --bg-darker: #252525;    /* fundo secundário (cinza escuro) */
+  --card-bg-dark: #333;
+  --text-dark: #f4f4f4;    /* texto em modo escuro (branco) */
+  --form-bg-dark: #3d3d3d;
+  --text-secondary: #a5a7b5;  /* texto secundário em modo escuro (acinzentado) */
+  --accent: #007acc;       /* cor de destaque principal (azul) */
+  --accent-secondary: #E8E8E8; /* cor de destaque secundária */
+  --slider-bar-dark: #858585;
+  --slider-thumb-dark: #007acc;
+  --error: #ff3860;
+
+  /* Modo claro – paleta de cores inspirada no ChatGPT */
+  --bg-light: #ffffff;         /* fundo principal claro (branco) */
+  --bg-lighter: #f4f6f7;       /* fundo de elementos claros (branco) */
+  --text-light: #1e1e1e;       /* texto em modo claro (preto suave) */
+  --text-secondary-light: #4a4f56; /* texto secundário em modo claro (cinza escuro) */
+  --accent-light: #007acc;     /* cor de destaque principal no claro (azul) */
+  --accent-secondary-light: #E8E8E8; /* cor de destaque secundária no claro */
+  --slider-bar-light: #7b7d7d;
+  --slider-thumb-light: #f4f6f7;
+  --error-light: #d90429;
+}
+
+/* Estilos base */
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-dark);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+body.modo-claro {
+  background-color: var(--bg-light);
+  color: var(--text-light);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Elementos de formulário */
+.form-control, .form-select, .input-group-text {
+  background-color: var(--form-bg-dark);
+  color: var(--text-dark);
+  border: 1px solid #333;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+body.modo-claro .form-control,
+body.modo-claro .form-select,
+body.modo-claro .input-group-text {
+  background-color: var(--bg-lighter);
+  color: var(--text-light);
+  border-color: #e3e3e3;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+/* Cards de medicação */
+.card-medicamento {
+  background-color: var(--card-bg-dark);
+  color: var(--text-dark);
+  border-left: 4px solid var(--accent);
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+body.modo-claro .card-medicamento {
+  background-color: var(--bg-light);
+  color: var(--text-light);
+  border-left-color: var(--accent-light);
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Botões universais (ações principais) */
+.btn-universal {
+  background-color: var(--accent);
+  color: #fff;
+  font-weight: bold;
+}
+
+body.modo-claro .btn-universal {
+  background-color: var(--accent-light);
+  color: #fff;
+  font-weight: bold;
+}
+
+/* Abas (tabs) ativas */
+.nav-tabs .nav-link.active {
+  background-color: var(--card-bg-dark);
+  border-color: #333 #333 var(--bg-dark);
+  color: var(--accent); /* cor da fonte da aba ativa */
+}
+
+/* Cor da fonte da aba inativa */
+.nav-link {
+  color: var(--accent-secondary);
+}
+
+body.modo-claro .nav-tabs .nav-link.active {
+  background-color: var(--bg-light);
+  border-color: #e3e3e3 #e3e3e3 var(--bg-lighter);
+  color: var(--accent-light);
+}
+
+body.modo-claro .nav-link {
+  color: var(--accent-secondary-light);
+}
+
+/* Informações de dose (texto menor) */
+.dose-info {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+body.modo-claro .dose-info {
+  font-size: 0.9rem;
+  color: var(--text-secondary-light);
+}
+
+/* Botão de alternância de modo (claro/escuro) */
+.btn-toggle-mode {
+  border-radius: 20px;
+  padding: 10px 15px;
+}
+
+/* Estado desabilitado para selects (mantém contraste) */
+.form-select:disabled {
+  color: var(--text-secondary) !important;
+  opacity: 1;
+  background-color: var(--bg-dark);
+  border-color: #444;
+}
+
+body.modo-claro .form-select:disabled {
+  color: var(--text-secondary-light) !important;
+  opacity: 1;
+  background-color: var(--bg-lighter);
+  border-color: #e3e3e3;
+}
+
+/* Barra e botão do slider (input range) */
+input[type="range"]::-webkit-slider-runnable-track {
+  background: var(--slider-bar-dark);
+  height: 6px;
+  border-radius: 5px;
+}
+input[type="range"]::-webkit-slider-thumb {
+  background: var(--slider-thumb-dark);
+  border: none;
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  margin-top: -6px;
+  cursor: pointer;
+}
+
+body.modo-claro input[type="range"]::-webkit-slider-runnable-track {
+  background: var(--slider-bar-light);
+  height: 6px;
+  border-radius: 5px;
+}
+body.modo-claro input[type="range"]::-webkit-slider-thumb {
+  background: var(--slider-thumb-light);
+  border: none;
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  margin-top: -6px;
+  cursor: pointer;
+}
+
+/* Menu lateral (sidenav) */
+.sidenav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 250px;
+  background-color: var(--card-bg-dark);
+  color: var(--text-dark);
+  padding: 60px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
+  transform: translateX(-100%);
+  z-index: 3000;
+}
+body.modo-claro .sidenav {
+  background-color: var(--bg-light);
+  color: var(--text-light);
+}
+.sidenav.open {
+  transform: translateX(0);
+}
+
+/* Links do menu lateral */
+.sidenav a {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  margin-bottom: 10px;
+  transition: background-color 0.2s;
+}
+.sidenav a:hover {
+  background-color: var(--bg-dark);
+}
+body.modo-claro .sidenav a:hover {
+  background-color: #e3e3e3;
+}
+
+/* Botão "hamburger" (abrir menu) */
+.hamburger-btn {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  background: none;
+  border: none;
+  color: var(--text-dark);
+  font-size: 1.8rem;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 1100;
+}
+body.modo-claro .hamburger-btn {
+  color: var(--text-light);
+}
+
+/* Botão de fechar (X) no menu lateral */
+.closebtn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  text-decoration: none;
+  font-size: 2rem;
+  color: var(--text-dark);
+  padding: 5px;
+  cursor: pointer;
+}
+body.modo-claro .closebtn {
+  color: var(--text-dark);
+}
+
+/* Botão de alternância de tema dentro do menu (fixado embaixo) */
+.sidenav .btn-toggle-mode {
+  margin-top: auto;
+  align-self: center;
+}
+
+/* Overlay para efeito ao abrir o menu (escurecimento do conteúdo) */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 2000;
+}
+.sidenav.open + .overlay {
+  opacity: 0.5;
+  pointer-events: auto;
+}
+
+/* Ajustes para seções dobráveis (colapsáveis) */
+.card-medicamento .card-header {
+  background: none;
+  border: none;
+  color: inherit;
+  padding: 0.5rem 1.25rem;
+  cursor: pointer;
+}
+#medication-list .card-medicamento {
+  padding: 0;
+}

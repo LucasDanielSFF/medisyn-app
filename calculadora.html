@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#007acc">
+  <link rel="manifest" href="manifest.json">
+  <title>Medisyn - Calculadora de Medicação</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Botão do menu lateral -->
+  <button class="hamburger-btn" onclick="openNav()">☰</button>
+
+  <!-- Menu lateral retrátil -->
+  <nav id="sidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="index.html">Página Inicial</a>
+    <a href="calculadora.html">Calculadora</a>
+    <a href="medicamentos.html">Medicamentos</a>
+    <a href="protocolos.html">Protocolos</a>
+    <button class="btn btn-toggle-mode btn-universal" onclick="toggleModoClaro()">🌓 Alternar Modo</button>
+  </nav>
+
+  <!-- Overlay para escurecer conteúdo ao abrir o menu -->
+  <div class="overlay" onclick="closeNav()"></div>
+
+  <div class="container py-4">
+    <a href="index.html" class="btn btn-secondary mt-4">← Voltar ao Menu</a>
+    <h1 class="text-center mb-4">Calculadora de Medicação</h1>
+
+    <div class="row" id="global-weight">
+      <div class="col-12">
+        <div class="mb-4">
+          <label class="form-label">Peso do Paciente (kg)</label>
+          <select class="form-select" id="patient-weight">
+            <option value="3">3 kg (RN)</option>
+            <option value="5">5 kg (Lactente)</option>
+            <option value="10">10 kg (Criança)</option>
+            <option value="20">20 kg (Criança)</option>
+            <option value="30">30 kg (Criança)</option>
+            <option value="40">40 kg</option>
+            <option value="50">50 kg</option>
+            <option value="60">60 kg</option>
+            <option value="70" selected>70 kg</option>
+            <option value="80">80 kg</option>
+            <option value="90">90 kg</option>
+            <option value="100">100 kg</option>
+            <option value="120">120 kg</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <ul class="nav nav-tabs" id="mainTabs">
+      <li class="nav-item">
+        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#infusion">Infusão</button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#bolus">Bolus</button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#universal">Universal</button>
+      </li>
+    </ul>
+
+    <div class="tab-content mt-3">
+      <div class="tab-pane fade show active" id="infusion">
+        <div class="row">
+          <div class="col-12">
+            <div class="medicamento-header d-flex justify-content-between align-items-center">
+              <h3>Infusões Contínuas</h3>
+              <button class="btn btn-universal" onclick="addCard('infusion')">+ Novo</button>
+            </div>
+            <div id="infusion-container" class="row g-3"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="bolus">
+        <div class="row">
+          <div class="col-12">
+            <div class="medicamento-header d-flex justify-content-between align-items-center">
+              <h3>Medicações em Bolus</h3>
+              <button class="btn btn-universal" onclick="addCard('bolus')">+ Novo</button>
+            </div>
+            <div id="bolus-container" class="row g-3"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="universal">
+        <div class="row">
+          <div class="col-12">
+            <div class="medicamento-header d-flex justify-content-between align-items-center">
+              <h3>Cards Personalizados</h3>
+              <button class="btn btn-universal" onclick="addCard('universal')">+  Novo Card</button>
+            </div>
+            <div id="universal-container" class="row g-3"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/medicationsDB.js"></script>
+  <script src="js/calculadora.js"></script>
+  <script>
+    // Detecção de tema preferido do usuário
+    const temaSalvo = localStorage.getItem('tema');
+    if (temaSalvo) {
+      if (temaSalvo === 'claro') document.body.classList.add('modo-claro');
+    } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+      document.body.classList.add('modo-claro');
+    }
+
+    // Funções do menu lateral e alternância de tema
+    function openNav() {
+      document.getElementById('sidenav').classList.add('open');
+    }
+    function closeNav() {
+      document.getElementById('sidenav').classList.remove('open');
+    }
+    function toggleModoClaro() {
+      const modoClaroAtivo = document.body.classList.toggle('modo-claro');
+      localStorage.setItem('tema', modoClaroAtivo ? 'claro' : 'escuro');
+    }
+  </script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('service-worker.js');
+      });
+    }
+  </script>
+</body>
+</html>

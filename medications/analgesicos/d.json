@@ -1,0 +1,21 @@
+{
+  "dexmedetomidina": {
+    "id": "dexmedetomidina",
+    "name": "Dexmedetomidina",
+    "nome_generico": "Dexmedetomidina",
+    "classe_terapeutica": "Sedativo agonista alfa-2 adrenérgico",
+    "mecanismo_acao": "Agonista seletivo de receptores adrenérgicos alfa-2 no SNC, diminuindo a liberação de noradrenalina e promovendo sedação e analgesia leve, com mínima depressão respiratória.",
+    "farmacocinetica": "Início de sedação em 15-30 min (com dose de ataque). Meia-vida ~2 h. Metabolização hepática (glucuronidação/CYP2A6) e excreção renal. Infusões prolongadas podem prolongar efeitos.",
+    "posologia_adulto": "Sedação em UTI: dose de ataque 0,5–1 µg/kg IV em 10-20 min (opcional), manutenção 0,2–0,7 µg/kg/h, ajustar conforme nível de sedação desejado. Geralmente até 24h de infusão contínua.",
+    "posologia_pediatrica": "Uso pediátrico off-label: infusão 0,1–0,5 µg/kg/h (sem bolus inicial na maioria dos casos, para evitar bradicardia). Ajustar dose conforme resposta e FC/PA.",
+    "reconstituicao": "Diluir concentrado antes do uso: adicionar 2 mL (200 µg) de dexmedetomidina em 48 mL de SF 0,9%, obtendo concentração ~4 µg/mL para infusão.",
+    "ajuste_dose": "Insuficiência hepática: reduzir dose (metabolismo diminuído). Insuficiência renal: não requer ajuste específico. Monitorar bradicardia/hipotensão e ajustar infusão conforme necessário.",
+    "uso_gestacao": "Categoria C. Não há estudos adequados; usar somente se essencial, pois pode causar bradicardia fetal.",
+    "uso_lactacao": "Desconhecido se excretada no leite; devido à falta de dados, evitar ou monitorar possível sedação no lactente.",
+    "interacoes": "Potencializa outros depressores do SNC (opioides, sedativos). Associada a bradicardia acentuada se combinada a betabloqueadores ou bloqueadores de canal de cálcio. Pode reduzir necessidade de anestésicos e opioides.",
+    "observacoes_gerais": "Proporciona sedação onde paciente pode despertar e cooperar se estimulado. Comum ocorrer bradicardia e hipotensão, reversíveis com redução ou suspensão da infusão. Necessária monitorização contínua cardiovascular.",
+    "admtype": {
+      "infusion": {}
+    }
+  }
+}
