@@ -1,5 +1,6 @@
-const CACHE_VERSION = 'v2'; // Atualize este valor sempre que fizer mudanças importantes
-const CACHE_NAME = "medisyn-pwa-v1-" + new Date().toISOString().slice(0, 10);
+const CACHE_VERSION = 'v1'; // Atualize este valor sempre que fizer mudanças importantes
+const CACHE_NAME = "medisyn-pwa-cd83a35173b0"; // Será substituído pelo script
+
 const urlsToCache = [
   "/",
   "index.html",
