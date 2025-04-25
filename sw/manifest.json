@@ -1,0 +1,22 @@
+{
+    "name": "Medisyn",
+    "short_name": "Medisyn",
+    "start_url": "index.html",
+    "scope": "./",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#007acc",
+    "theme_color": "#007acc",
+    "icons": [
+      {
+        "src": "icons/medisyn-192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "icons/medisyn-512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ]
+  }

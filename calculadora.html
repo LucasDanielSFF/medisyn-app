@@ -4,16 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#007acc">
-  <link rel="manifest" href="manifest.json">
+  <link rel="manifest" href="./sw/manifest.json">
   <title>Medisyn - Calculadora de Medicação</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="public/css/styles.css">
 </head>
 <body>
-  <!-- Botão do menu lateral -->
   <button class="hamburger-btn" onclick="openNav()">☰</button>
 
-  <!-- Menu lateral retrátil -->
   <nav id="sidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <a href="index.html">Página Inicial</a>
@@ -23,7 +21,6 @@
     <button class="btn btn-toggle-mode btn-universal" onclick="toggleModoClaro()">🌓 Alternar Modo</button>
   </nav>
 
-  <!-- Overlay para escurecer conteúdo ao abrir o menu -->
   <div class="overlay" onclick="closeNav()"></div>
 
   <div class="container py-4">
@@ -31,34 +28,39 @@
     <h1 class="text-center mb-4">Calculadora de Medicação</h1>
 
     <div class="row" id="global-weight">
-      <div class="col-12">
-        <div class="mb-4">
-          <label class="form-label">Peso do Paciente (kg)</label>
-          <select class="form-select" id="patient-weight">
-            <option value="3">3 kg (RN)</option>
-            <option value="5">5 kg (Lactente)</option>
-            <option value="10">10 kg (Criança)</option>
-            <option value="20">20 kg (Criança)</option>
-            <option value="30">30 kg (Criança)</option>
-            <option value="40">40 kg</option>
-            <option value="50">50 kg</option>
-            <option value="60">60 kg</option>
-            <option value="70" selected>70 kg</option>
-            <option value="80">80 kg</option>
-            <option value="90">90 kg</option>
-            <option value="100">100 kg</option>
-            <option value="120">120 kg</option>
-          </select>
+      <div class="col-12 d-flex flex-column align-items-center">
+        <div class="mb-4" style="width: 100%; max-width: 400px">
+          <label class="form-label">Peso do Paciente</label>
+          <div class="input-group has-validation">
+            <input 
+              type="number" 
+              class="form-control" 
+              id="patient-weight"
+              min="3"
+              max="300"
+              step="1"
+              value="70"
+              required
+            >
+            <span class="input-group-text">kg</span>
+            <div id="weight-error" class="invalid-feedback d-flex align-items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"/>
+              </svg>
+              Somente valores de 40 a 300 kg
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
     <ul class="nav nav-tabs" id="mainTabs">
       <li class="nav-item">
-        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#sri">SRI</button>
+        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#iot">IOT</button>
       </li>
       <li class="nav-item">
-        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#infusion">Infusão</button>
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#infusion">Infusão</button>
       </li>
       <li class="nav-item">
         <button class="nav-link" data-bs-toggle="tab" data-bs-target="#bolus">Bolus</button>
@@ -69,24 +71,23 @@
     </ul>
 
     <div class="tab-content mt-3">
-      <div class="tab-pane fade" id="sri">
+      <div class="tab-pane fade show active" id="iot">
         <div class="row">
           <div class="col-12">
             <div class="medicamento-header d-flex justify-content-between align-items-center">
-              <h3>Protocolo SRI</h3>
-              <button class="btn btn-universal" onclick="addCard('sri')" style="display: none;">+ Novo</button>
+              <h3>Intubação Orotraqueal - Sequência Rápida</h3>
+              <button class="btn btn-universal" onclick="addCard('iot')" style="display: none;">+ Novo</button>
             </div>
-            <div id="sri-container" class="row g-3"></div>
+            <div id="iot-container" class="row g-3"></div>
           </div>
         </div>
       </div>
 
-      <div class="tab-pane fade show active" id="infusion">
+      <div class="tab-pane fade" id="infusion">
         <div class="row">
           <div class="col-12">
             <div class="medicamento-header d-flex justify-content-between align-items-center">
               <h3>Infusões Contínuas</h3>
-              <button class="btn btn-universal" onclick="addCard('infusion')">+ Novo</button>
             </div>
             <div id="infusion-container" class="row g-3"></div>
           </div>
@@ -98,7 +99,7 @@
           <div class="col-12">
             <div class="medicamento-header d-flex justify-content-between align-items-center">
               <h3>Medicações em Bolus</h3>
-              <button class="btn btn-universal" onclick="addCard('bolus')">+ Novo</button>
+              <button class="btn btn-universal" onclick="addCard('bolus')" style="display: none;">+ Novo</button>
             </div>
             <div id="bolus-container" class="row g-3"></div>
           </div>
@@ -120,30 +121,27 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="js/medicationsDB.js"></script>
-  <script src="js/calculadora.js"></script>
-  <script>
-    // Detecção de tema preferido do usuário
-    const temaSalvo = localStorage.getItem('tema');
-    if (temaSalvo) {
-      if (temaSalvo === 'claro') document.body.classList.add('modo-claro');
-    } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
-      document.body.classList.add('modo-claro');
-    }
+  <script type="module" src="./public/js/modules/calculadora/calculadora.js"></script>
+  <script type="module">
+    import { carregarCardsAutomaticos, initEventListeners } from './public/js/modules/calculadora/cardManager.js';
+    import { toggleModoClaro, openNav, closeNav } from './public/js/modules/themeManager.js';
 
-    // Funções do menu lateral e alternância de tema
-    function openNav() {
-      document.getElementById('sidenav').classList.add('open');
-    }
-    function closeNav() {
-      document.getElementById('sidenav').classList.remove('open');
-    }
-    function toggleModoClaro() {
-      const modoClaroAtivo = document.body.classList.toggle('modo-claro');
-      localStorage.setItem('tema', modoClaroAtivo ? 'claro' : 'escuro');
-    }
-  </script>
-  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      initEventListeners();
+      carregarCardsAutomaticos('iot');
+    });
+
+    const temaSalvo = localStorage.getItem('tema');
+    if (temaSalvo === 'claro') document.body.classList.add('modo-claro');
+    
+    window.openNav = () => document.getElementById('sidenav').classList.add('open');
+    window.closeNav = () => document.getElementById('sidenav').classList.remove('open');
+    window.toggleModoClaro = () => {
+      document.body.classList.toggle('modo-claro');
+      localStorage.setItem('tema', document.body.classList.contains('modo-claro') ? 'claro' : 'escuro');
+    };
+
+  
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('service-worker.js');
