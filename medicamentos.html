@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#007acc">
+  <link rel="manifest" href="manifest.json">
+  <title>Medisyn - Medicamentos</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./public/css/styles.css">
+</head>
+<body>
+  <button class="hamburger-btn" onclick="openNav()">☰</button>
+  <nav id="sidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="index.html">Página Inicial</a>
+    <a href="calculadora.html">Calculadora</a>
+    <a href="medicamentos.html">Medicamentos</a>
+    <a href="protocolos.html">Protocolos</a>
+    <button class="btn btn-toggle-mode btn-universal" onclick="toggleModoClaro()">🌓 Alternar Modo</button>
+  </nav>
+
+  <div class="overlay" onclick="closeNav()"></div>
+
+  <div class="container py-4">
+    <a href="index.html" class="btn btn-secondary mt-4">← Voltar ao Menu</a>
+    <h1 class="text-center mb-4">Lista de Medicamentos</h1>
+    <div id="medication-list"></div>
+    <div id="scroll-sentinel"></div>
+  </div>
+
+  <script>
+    const temaSalvo = localStorage.getItem('tema');
+    if (temaSalvo === 'claro' || window.matchMedia('(prefers-color-scheme: light)').matches) {
+      document.body.classList.add('modo-claro');
+    }
+
+    function openNav() {
+      document.getElementById('sidenav').classList.add('open');
+    }
+    function closeNav() {
+      document.getElementById('sidenav').classList.remove('open');
+    }
+    function toggleModoClaro() {
+      const modoClaroAtivo = document.body.classList.toggle('modo-claro');
+      localStorage.setItem('tema', modoClaroAtivo ? 'claro' : 'escuro');
+    }
+
+    const letters = 'abcdefghijklmnopqrstuvwxyz'.split('');
+    let currentLetterIndex = 0;
+    const category = 'analgesicos';
+    const medListDiv = document.getElementById('medication-list');
+
+    async function loadMedications(letter) {
+      try {
+        const res = await fetch(`medications/${category}/${letter}.json`);
+        if (!res.ok) throw new Error(`Arquivo não encontrado: ${res.status}`);
+        const meds = await res.json();
+        for (const med of Object.values(meds)) {
+          const card = document.createElement('div');
+          card.className = 'card-medicamento mb-3';
+          card.innerHTML = `
+            <div class="card-header" data-bs-toggle="collapse" data-bs-target="#${med.id}-details">
+              <strong>${med.name}</strong> ${med.nome_generico ? '<small>(' + med.nome_generico + ')</small>' : ''}
+            </div>
+            <div id="${med.id}-details" class="collapse">
+              <div class="card-body text-start">
+                <p><strong>Classe terapêutica: </strong>${med.classe_terapeutica}</p>
+                <p><strong>Mecanismo de ação: </strong>${med.mecanismo_acao}</p>
+                <p><strong>Farmacocinética: </strong>${med.farmacocinetica}</p>
+                <p><strong>Posologia (Adulto): </strong>${med.posologia_adulto}</p>
+                <p><strong>Posologia (Pediátrica): </strong>${med.posologia_pediatrica}</p>
+                <p><strong>Reconstituição: </strong>${med.reconstituicao}</p>
+                <p><strong>Ajuste de dose: </strong>${med.ajuste_dose}</p>
+                <p><strong>Uso na gestação: </strong>${med.uso_gestacao}</p>
+                <p><strong>Uso na lactação: </strong>${med.uso_lactacao}</p>
+                <p><strong>Interações: </strong>${med.interacoes}</p>
+                <p><strong>Observações gerais: </strong>${med.observacoes_gerais}</p>
+              </div>
+            </div>`;
+          medListDiv.appendChild(card);
+        }
+      } catch (e) {
+        console.warn(`Erro ao carregar medicamentos da letra ${letter}:`, e);
+      }
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && currentLetterIndex < letters.length) {
+        loadMedications(letters[currentLetterIndex]);
+        currentLetterIndex++;
+      }
+    });
+    observer.observe(document.getElementById('scroll-sentinel'));
+
+    // Carregamento inicial com letra A
+    loadMedications('a');
+    currentLetterIndex = 1;
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="./public/js/themeManager.js"></script>
+  <script type="module" src="./public/js/calculadora.js"></script>
+  <script type="module" src="./public/js/config.js"></script>
+  <script type="module" src="./public/js/uiTemplates.js"></script>
+  <script type="module" src="./public/js/calculations.js"></script>
+  <script type="module" src="./public/js/cardManager.js"></script>
+  <script type="module">
+     import { carregarCardsAutomaticos, initEventListeners } from './public/js/cardManager.js';
+     import { toggleModoClaro, openNav, closeNav } from './public/js/themeManager.js';
+
+    window.addEventListener('DOMContentLoaded', () => {
+      initEventListeners();
+      carregarCardsAutomaticos('infusion');
+    });
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('service-worker.js');
+      });
+    }
+  </script>
+</body>
+</html>
