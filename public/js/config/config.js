@@ -29,7 +29,7 @@ export const configCardsPorAba = {
     { key: 'midazolam', type: 'bolus',  doseOptionId: 'iot', presentationIndex: 1 }, 
     { key: 'cetamina', type: 'bolus',  doseOptionId: 'iot', presentationIndex: 1 },
     { key: 'etomidato', type: 'bolus',  doseOptionId: 'iot'},
-    { Key: 'rocuronio', type: 'bolus', doseOptionId: 'iot'}
+    { key: 'rocuronio', type: 'bolus', doseOptionId: 'iot'}
   ],
   infusion: [ 
     { key: 'fentanil', type: 'infusion' }, 
