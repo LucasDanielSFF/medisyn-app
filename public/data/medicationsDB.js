@@ -121,5 +121,20 @@ export const medicationsDB = {
         ]
       }
     }
+  },
+  rocuronio: {
+    id: 'rocuronio',
+    name: 'Brometo de Rocurônio',
+    admtype: {
+      bolus: {
+        presentations: [
+          { label: '10 mg/mL', value: 10000 }
+        ],
+        doseOptions: [
+          { id: 'iot', label: 'Intubação Orotraqueal - SRI (0.6 - 1.2 mg/kg)', min: 0.6, max: 1.2, step: 0.01, unit: 'mg/kg' }
+        ],
+        dose: { min: 0.05, max: 0.3, step: 0.01, unit: 'mg/kg' }
+      }
+    }
   }
 };
