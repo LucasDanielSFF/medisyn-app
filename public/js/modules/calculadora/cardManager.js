@@ -103,6 +103,19 @@ export function initInfusionCard(cardId, medKey, config = {}) {
     });
   }
 
+  // Configurar eventos para o seletor de unidade de tempo
+  const timeUnitSelect = card.querySelector('.infusion-time-unit');
+  if (timeUnitSelect) {
+    timeUnitSelect.addEventListener('change', () => {
+      const selectedUnit = timeUnitSelect.value;
+      const doseUnitElement = card.querySelector('.dose-unit');
+      const unitParts = med.admtype.infusion.dose.unit.split('/');
+      unitParts.pop();
+      doseUnitElement.textContent = `${unitParts.join('/')}/${selectedUnit}`;
+      calcularInfusion(cardId);
+    });
+  }
+
   // Configurar eventos de mudança de medicamento
   selectMed.addEventListener('change', () => {
     updateCardContent(cardId, 'infusion', selectMed.value, config);
