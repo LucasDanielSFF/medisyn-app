@@ -110,6 +110,22 @@ export function createInfusionUI(medKey, config = {}) {
     ? med.doseOptions?.find(opt => opt.id === config.doseOptionId)
     : med.dose;
 
+  // Verifica se a unidade é baseada em tempo (min/h)
+  const unitParts = doseConfig.unit.split('/');
+  const timePart = unitParts.pop();
+  const canToggle = ['min', 'h'].includes(timePart);
+  const timeUnitHTML = canToggle ? `
+    <div class="col-md-4">
+      <div class="mb-3">
+        <label class="form-label">Unidade de Tempo</label>
+        <select class="form-select infusion-time-unit">
+          <option value="min" ${timePart === 'min' ? 'selected' : ''}>${unitParts.join('/')}/min</option>
+          <option value="h" ${timePart === 'h' ? 'selected' : ''}>${unitParts.join('/')}/h</option>
+        </select>
+      </div>
+    </div>
+  ` : '';
+
   const valorMedio = calcularValorMedio(doseConfig.min, doseConfig.max);
   const primeiraDiluicao = med.diluicoes[0] || {};
 
@@ -123,6 +139,11 @@ export function createInfusionUI(medKey, config = {}) {
     : '';
 
   return `
+    ${canToggle ? `
+      <div class="row">
+        ${timeUnitHTML}
+      </div>
+    ` : ''}
     ${(med.doseOptions && !config.isLocked) ? `
       <div class="mb-3 ${config.isLocked ? 'd-none' : ''}">
         <label class="form-label">Perfil de Dose</label>
