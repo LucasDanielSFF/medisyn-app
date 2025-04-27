@@ -68,6 +68,21 @@ export function calcularInfusion(cardId, doseOverride = null) {
   // Se qualquer parte do DOM de infusão estiver ausente, interrompe
   if (!medSelect || !doseSlider || !medVolumeInput || !solVolumeInput || !concValueInput || !concUnitSelect) return;
 
+  // Obter unidade de tempo selecionada
+  const timeUnitSelect = card.querySelector('.infusion-time-unit');
+  const timeUnit = timeUnitSelect ? timeUnitSelect.value : 'h';
+  const originalUnit = med.admtype.infusion.dose.unit;
+
+  // Ajustar dose conforme a unidade
+  if (originalUnit.endsWith('/min') && timeUnit === 'h') {
+    dose *= 60; // Converte de/min para/h
+  } else if (originalUnit.endsWith('/h') && timeUnit === 'min') {
+    dose /= 60; // Converte de/h para/min
+  }
+
+  // Calcular vazão
+  const flowRate = (dose * weight) / finalConcentration;
+
   const medKey = medSelect.value;
   const med = medicationsDB[medKey];
   const dose = doseOverride ?? parseFloat(doseSlider.value);
