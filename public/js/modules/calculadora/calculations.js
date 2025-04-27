@@ -73,6 +73,8 @@ export function calcularInfusion(cardId, doseOverride = null) {
   const timeUnit = timeUnitSelect ? timeUnitSelect.value : 'h';
   const originalUnit = med.admtype.infusion.dose.unit;
 
+  const dose = doseOverride ?? parseFloat(doseSlider.value);
+
   // Ajustar dose conforme a unidade
   if (originalUnit.endsWith('/min') && timeUnit === 'h') {
     dose *= 60; // Converte de/min para/h
@@ -85,7 +87,7 @@ export function calcularInfusion(cardId, doseOverride = null) {
 
   const medKey = medSelect.value;
   const med = medicationsDB[medKey];
-  const dose = doseOverride ?? parseFloat(doseSlider.value);
+  
   const medVolume = parseFloat(medVolumeInput.value);
   const solVolume = parseFloat(solVolumeInput.value);
   const concValue = parseFloat(concValueInput.value);
