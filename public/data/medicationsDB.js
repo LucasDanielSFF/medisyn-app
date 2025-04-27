@@ -107,7 +107,7 @@ export const medicationsDB = {
   },
   noradrenalina: {
     id: 'noradrenalina',
-    name: 'Hemitartarato de Noraepinefrina',
+    name: 'Hemitartarato de Norepinefrina',
     admtype: {
       bolus: {
         presentations: [
@@ -119,7 +119,7 @@ export const medicationsDB = {
         dose: { min: 1, max: 5, step: 0.1, unit: 'mcg/kg' }
       },
       infusion: {
-        dose: { min: 0.3, max: 3, step: 0.1, unit: 'µg/kg/h' },
+        dose: { min: 0.3, max: 3, step: 0.1, unit: 'µg/kg/min' },
         diluicoes: [
           { label: '20mL + 180mL SF 0,9%)', medVolume: 20, solVolume: 180, concValue: 1000, concUnit: 'mcg' },
           { label: 'Padrão 2 (80mL SF)', medVolume: 20, solVolume: 80, concValue: 50, concUnit: 'mcg' }
