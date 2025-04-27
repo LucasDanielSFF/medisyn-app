@@ -105,6 +105,28 @@ export const medicationsDB = {
       }
     }
   },
+  noradrenalina: {
+    id: 'noradrenalina',
+    name: 'Hemitartarato de Noraepinefrina',
+    admtype: {
+      bolus: {
+        presentations: [
+          { label: '1 mg/mL', value: 1000 },
+        ],
+        doseOptions: [
+          { id: 'iot', label: 'Intubação Orotraqueal - SRI (1 - 3 mcg/kg)', min: 1, max: 3, step: 0.01, unit: 'mcg/kg' }
+        ],
+        dose: { min: 1, max: 5, step: 0.1, unit: 'mcg/kg' }
+      },
+      infusion: {
+        dose: { min: 0.3, max: 3, step: 0.1, unit: 'µg/kg/h' },
+        diluicoes: [
+          { label: '20mL + 180mL SF 0,9%)', medVolume: 20, solVolume: 180, concValue: 1000, concUnit: 'mcg' },
+          { label: 'Padrão 2 (80mL SF)', medVolume: 20, solVolume: 80, concValue: 50, concUnit: 'mcg' }
+        ]
+      }
+    }
+  },
   dexmedetomidina: {
     id: 'dexmedetomidina',
     name: 'Dexmedetomidina',
