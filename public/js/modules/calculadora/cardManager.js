@@ -110,6 +110,9 @@ export function initInfusionCard(cardId, medKey, config = {}) {
       const selectedUnit = timeUnitSelect.value;
       const doseUnitElement = card.querySelector('.dose-unit');
       const unitParts = med.admtype.infusion.dose.unit.split('/');
+      const originalUnit = med.admtype.infusion.dose.unit;
+      const baseUnit = originalUnit.replace(/\/min|\/h/g, ''); // Remove "/min" ou "/h"
+  doseUnitElement.textContent = `${baseUnit}/${selectedUnit}`;
       unitParts.pop();
       doseUnitElement.textContent = `${unitParts.join('/')}/${selectedUnit}`;
       calcularInfusion(cardId);
