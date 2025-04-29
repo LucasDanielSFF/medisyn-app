@@ -1,28 +1,36 @@
 :root {
-  --bg-dark: #1e1e1e;         /* fundo de principal (cinza profundo) */
-  --bg-darker: #252525;    /* fundo secundário (cinza escuro) */
-  --card-bg-dark: #333;
-  --text-dark: #ffffff;    /* texto em modo escuro (branco) */
-  --form-bg-dark: #3d3d3d;
-  --text-secondary: #a5a7b5;  /* texto secundário em modo escuro (acinzentado) */
-  --accent: #007acc;       /* cor de destaque principal (azul) */
-  --accent-secondary: #E8E8E8; /* cor de destaque secundária */
-  --slider-bar-dark: #858585;
-  --slider-thumb-dark: #007acc;
-  --error: #ff3860;
+  --bg-dark: #1A1A1A;         /* fundo de principal (cinza profundo) */
+  --bg-darker: #2B2B2B;    /* fundo secundário (cinza escuro) */
+  --card-bg-dark: #3A3A3A;
+  --text-dark: #F0F3F5;    /* texto em modo escuro (branco) */
+  --form-bg-dark: #404040;
+  --text-secondary: #9FA6AD;  /* texto secundário em modo escuro (acinzentado) */
+  --accent: #007ACC;       /* cor de destaque principal (azul) */
+  --accent-secondary: #6B8EA3; /* cor de destaque secundária */
+  --slider-bar-dark: #5C5C5C;
+  --slider-thumb-dark: #3D637C;
+  --error: #FF3860;
 
-  --bg-light: #eaecee;         /* fundo principal claro (branco) */
-  --bg-lighter: #d5d8dc;       /* fundo de elementos claros (branco) */
-  --text-light: #000000;       /* texto em modo claro (preto suave) */
-  --text-secondary-light: #4a4f56; /* texto secundário em modo claro (cinza escuro) */
-  --accent-light: #007acc;     /* cor de destaque principal no claro (azul) */
-  --accent-secondary-light: #E8E8E8; /* cor de destaque secundária no claro */
-  --slider-bar-light: #7b7d7d;
-  --slider-thumb-light: #f4f6f7;
-  --error-light: #d90429;
+  --bg-light: #F8F9FA;         /* fundo principal claro (branco) */
+  --bg-lighter: #E9ECEF;       /* fundo de elementos claros (branco) */
+  --text-light: #343A40;       /* texto em modo claro (preto suave) */
+  --text-secondary-light: #6C757D; /* texto secundário em modo claro (cinza escuro) */
+  --accent-light: #007ACC;     /* cor de destaque principal no claro (azul) */
+  --accent-secondary-light: #A8C0CE; /* cor de destaque secundária no claro */
+  --slider-bar-light: #CED4DA;
+  --slider-thumb-light: #5C7C99;
+  --error-light: #FF3860;
 }
 
-/* Estilos base */
+h1, h2, h3 {
+  text-align: left !important;
+  margin-left: 15px;
+}
+
+.container.py-4 {
+  padding-top: 1rem !important;
+}
+
 body {
   background-color: var(--bg-dark);
   color: var(--text-dark);
@@ -37,7 +45,6 @@ body.modo-claro {
   transition: background-color 0.3s, color 0.3s;
 }
 
-/* Elementos de formulário */
 .form-control, .form-select, .input-group-text {
   background-color: var(--form-bg-dark);
   color: var(--text-dark);
@@ -54,7 +61,6 @@ body.modo-claro .input-group-text {
   transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 
-/* Cards de medicação */
 .card-medicamento {
   background-color: var(--card-bg-dark);
   color: var(--text-dark);
@@ -75,7 +81,6 @@ body.modo-claro .card-medicamento {
   transition: background-color 0.3s, color 0.3s;
 }
 
-/* Botões universais (ações principais) */
 .btn-universal {
   background-color: var(--accent);
   color: #fff;
@@ -88,14 +93,12 @@ body.modo-claro .btn-universal {
   font-weight: bold;
 }
 
-/* Abas (tabs) ativas */
 .nav-tabs .nav-link.active {
   background-color: var(--card-bg-dark);
   border-color: #333 #333 var(--bg-dark);
-  color: var(--accent); /* cor da fonte da aba ativa */
+  color: var(--accent);
 }
 
-/* Cor da fonte da aba inativa */
 .nav-link {
   color: var(--accent-secondary);
 }
@@ -110,7 +113,6 @@ body.modo-claro .nav-link {
   color: var(--accent-secondary-light);
 }
 
-/* Informações de dose (texto menor) */
 .dose-info {
   font-size: 0.9rem;
   color: var(--text-secondary);
@@ -121,12 +123,10 @@ body.modo-claro .dose-info {
   color: var(--text-secondary-light);
 }
 
-/* Botão de alternância de modo (claro/escuro) */
 .btn-toggle-mode {
   padding: 10px 15px;
 }
 
-/* Estado desabilitado para selects (mantém contraste) */
 .form-select:disabled {
   color: var(--text-secondary) !important;
   opacity: 1;
@@ -141,7 +141,6 @@ body.modo-claro .form-select:disabled {
   border-color: #e3e3e3;
 }
 
-/* Barra e botão do slider (input range) */
 input[type="range"]::-webkit-slider-runnable-track {
   background: var(--slider-bar-dark);
   height: 6px;
@@ -172,7 +171,6 @@ body.modo-claro input[type="range"]::-webkit-slider-thumb {
   cursor: pointer;
 }
 
-/* Menu lateral (sidenav) */
 .sidenav {
   position: fixed;
   top: 0;
@@ -196,7 +194,6 @@ body.modo-claro .sidenav {
   transform: translateX(0);
 }
 
-/* Links do menu lateral */
 .sidenav a {
   display: block;
   text-decoration: none;
@@ -211,45 +208,11 @@ body.modo-claro .sidenav a:hover {
   background-color: #e3e3e3;
 }
 
-/* Botão "hamburger" (abrir menu) */
-.hamburger-btn {
-  position: fixed;
-  top: 15px;
-  left: 15px;
-  background: none;
-  border: none;
-  color: var(--text-dark);
-  font-size: 1.8rem;
-  padding: 10px;
-  cursor: pointer;
-  z-index: 1100;
-}
-body.modo-claro .hamburger-btn {
-  color: var(--text-light);
-}
-
-/* Botão de fechar (X) no menu lateral */
-.closebtn {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  text-decoration: none;
-  font-size: 2rem;
-  color: var(--text-dark);
-  padding: 5px;
-  cursor: pointer;
-}
-body.modo-claro .closebtn {
-  color: var(--text-dark);
-}
-
-/* Botão de alternância de tema dentro do menu (fixado embaixo) */
 .sidenav .btn-toggle-mode {
   margin-top: auto;
   align-self: center;
 }
 
-/* Overlay para efeito ao abrir o menu (escurecimento do conteúdo) */
 .overlay {
   position: static;
   top: 0;
@@ -267,7 +230,6 @@ body.modo-claro .closebtn {
   pointer-events: auto;
 }
 
-/* Ajustes para seções dobráveis (colapsáveis) */
 .card-medicamento .card-header {
   background: none;
   border: none;
@@ -275,18 +237,14 @@ body.modo-claro .closebtn {
   padding: 0.5rem 1.25rem;
   cursor: pointer;
 }
-#medication-list .card-medicamento {
-  padding: 0;
-}
 
-/* Botão de edição personalizada */
 .btn-custom-dilution {
   background-color: var(--accent) !important;
   color: white !important;
   padding: 8px 12px;
   border-radius: 6px;
   transition: all 0.2s ease;
-  height: 38px; /* Mesma altura do select */
+  height: 38px;
   border: none;
 }
 
@@ -306,12 +264,10 @@ body.modo-claro .closebtn {
   box-shadow: 0 0 0 3px rgba(0, 122, 204, 0.3);
 }
 
-/* Ícone dentro do botão */
 .btn-custom-dilution svg {
-  margin-bottom: 1px; /* Alinhamento visual */
+  margin-bottom: 1px;
 }
 
-/* Ajustes para o input de peso */
 #global-weight .input-group {
   max-width: 150px;
 }
@@ -328,13 +284,15 @@ body.modo-claro #global-weight .input-group-text {
   border-color: #e3e3e3;
 }
 
-/* Validação do peso */
 #weight-error {
   position: static;
   display: none;
   color: var(--error) !important;
   font-weight: 500;
   padding-left: 0.5rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
 }
 
 #weight-error svg {
@@ -342,22 +300,17 @@ body.modo-claro #global-weight .input-group-text {
 }
 
 .was-validated #patient-weight:invalid ~ #weight-error {
-  display: flex;
+  display: flex !important;
 }
 
 #global-weight .input-group:has(#patient-weight:invalid) {
   margin-bottom: 0.5rem;
 }
 
-#weight-error {
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.3s ease;
-}
-
 #weight-error.show {
   opacity: 1;
   visibility: visible;
+  animation: shake 0.3s ease;
 }
 
 @keyframes hideError {
@@ -370,4 +323,72 @@ body.modo-claro #global-weight .input-group-text {
   top: 100%;
   left: 0;
   margin-top: 0.25rem;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .form-range {
+    margin-top: 0.5rem;
+  }
+
+  .card-header {
+    padding: 8px 12px;
+  }
+
+  .card-body {
+    padding: 12px;
+  }
+
+  .row.g-3 {
+    gap: 0.5rem !important;
+  }
+
+  .hamburger {
+    top: 5px;
+    left: 5px;
+  }
+
+  #global-weight .col-md-4 {
+    margin-bottom: 0.5rem;
+  }
+  
+  #weight-error {
+    justify-content: flex-start;
+    padding-left: 0;
+  }
+}
+
+.form-control, .form-select {
+  font-size: 0.9rem;
+  padding: 0.5rem 0.75rem;
+}
+
+.input-group-text {
+  padding: 0.5rem 0.75rem;
+}
+
+.nav-tabs .nav-link {
+  padding: 0.75rem;
+  font-size: 0.9rem;
+}
+
+.form-range {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.dose-value {
+  font-weight: bold;
+  color: var(--accent);
+  transition: color 0.3s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
 }

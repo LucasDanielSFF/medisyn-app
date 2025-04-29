@@ -1,8 +1,6 @@
-// sidenav.js
 import { toggleModoClaro } from './themeManager.js';
 
 export function initSidenav() {
-  // Event listeners
   document.querySelector('.overlay')?.addEventListener('click', closeNav);
   document.getElementById('sidenav')?.addEventListener('click', (e) => {
     if (e.target.classList.contains('closebtn')) closeNav();
@@ -25,6 +23,5 @@ export function closeNav() {
   document.querySelector('.hamburger')?.classList.remove('is-active');
 }
 
-// Export para uso em HTML se necessário
 window.toggleModoClaro = toggleModoClaro;
 window.toggleNav = toggleNav;

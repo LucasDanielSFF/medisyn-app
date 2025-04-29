@@ -1,18 +1,9 @@
-// calculadora.js
-
-// ==================================================
-// ►►► Importações Necessárias
-// ==================================================
-import { configAba} from '../../config/config.js';
-import { carregarCardsAutomaticos, updateCardContent} from './cardManager.js';
+import { configAba } from '../../config/config.js';
+import { carregarCardsAutomaticos, updateCardContent } from './cardManagerShared.js';
 import { medicationsDB } from '../../../data/medicationsDB.js';
-
-// ==================================================
-// ►►► Inicialização da Página
-// ==================================================
+import { createCardLayout } from '../../utils/cardComponent.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Configuração das abas
   document.querySelectorAll('button[data-bs-toggle="tab"]').forEach(tab => {
     tab.addEventListener('shown.bs.tab', e => {
       const target = e.target.getAttribute('data-bs-target').replace('#', '');
@@ -20,18 +11,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Ativa a primeira aba e carrega os cards
   const firstTab = document.querySelector('button[data-bs-toggle="tab"]'); 
   if(firstTab) {
-    new bootstrap.Tab(firstTab).show(); // Força ativação Bootstrap
+    new bootstrap.Tab(firstTab).show();
 
     carregarCardsAutomaticos(firstTab.getAttribute('data-bs-target').replace('#', ''));
   }
 });
 
-// ==================================================
-// ►►► Funções Globais no Window
-// ==================================================
 window.removeCard = (cardId) => document.getElementById(cardId)?.remove();
 window.addCard = (containerType = 'universal') => {
   if (!configAba[containerType]?.addButton) return;
@@ -40,31 +27,28 @@ window.addCard = (containerType = 'universal') => {
     bolus: 'bolus-container',
     universal: 'universal-container'
   };
+
+  const isRemovable = configAba[containerType]?.removable;
   const cardId = `card-${Date.now()}-${Math.random()}`;
   const initialType = containerType === 'infusion' ? 'infusion' : 'bolus';
 
-  const isRemovable = configAba[containerType]?.removable;
+  const cardHTML = createCardLayout(cardId, {
+    removable: isRemovable,
+    headerContent: `
+      <button class="btn btn-danger btn-sm btn-remove-card" onclick="removeCard('${cardId}')">×</button>
+          <select class="form-select tipo-medicamento w-auto" onchange="changeCardType('${cardId}', this.value)">
+            <option value="bolus" ${initialType === 'bolus' ? 'selected' : ''}>Bolus</option>
+            <option value="infusion" ${initialType === 'infusion' ? 'selected' : ''}>Infusão</option>
+        </select>
+    `,
+    content: `<div id="${cardId}-content"></div>`
+  });
 
   const initialMedKey = Object.keys(medicationsDB).find(key => 
     medicationsDB[key]?.admtype?.[initialType]
   );
 
-  const cardHTML = `<div class="col-12" id="${cardId}">
-    <div class="card-medicamento">
-      ${isRemovable ? `
-        <div class="d-flex align-items-center justify-content-start gap-2 mb-3">
-          <button class="btn btn-danger btn-sm btn-remove-card" onclick="removeCard('${cardId}')">×</button>
-          <select class="form-select tipo-medicamento w-auto" onchange="changeCardType('${cardId}', this.value)">
-            <option value="bolus" ${initialType === 'bolus' ? 'selected' : ''}>Bolus</option>
-            <option value="infusion" ${initialType === 'infusion' ? 'selected' : ''}>Infusão</option>
-          </select>
-        </div>` : ''
-      }
-      <div id="${cardId}-content"></div>
-    </div>
-  </div>`;
-
   document.getElementById(map[containerType]).insertAdjacentHTML('beforeend', cardHTML);
 
-updateCardContent(cardId, initialType, initialMedKey || ''); // Forçar passagem de chave válida
+updateCardContent(cardId, initialType, initialMedKey || '');
 }

@@ -2,8 +2,10 @@
 // ►►► Configurações gerais
 // ==================================================
 
-import { createBolusUI, createInfusionUI } from '../modules/calculadora/uiTemplates.js';
-import { initBolusCard, initInfusionCard } from '../modules/calculadora/cardManager.js';
+import { createInfusionUI } from '../modules/calculadora/uiTemplatesInfusion.js';
+import { createBolusUI } from '../modules/calculadora/uiTemplatesBolus.js'
+import { initBolusCard } from '../modules/calculadora/cardManagerBolus.js';
+import { initInfusionCard } from '../modules/calculadora/cardManagerInfusion.js';
 
 export const configAba = {
   iot: { addButton: false, removable: false },
@@ -14,11 +16,11 @@ export const configAba = {
 
 export const cardStrategies = {
   bolus: { 
-    createUI: (medKey, config) => createBolusUI(medKey, config),
+    createUI: (cardId, medKey, config) => createBolusUI(cardId, medKey, config),
     init: (cardId, medKey, config) => initBolusCard(cardId, medKey, config)
   },
   infusion: { 
-    createUI: (medKey, config) => createInfusionUI(medKey, config),
+    createUI: (cardId, medKey, config) => createInfusionUI(cardId, medKey, config),
     init: (cardId, medKey, config) => initInfusionCard(cardId, medKey, config)
   }
 };
@@ -28,8 +30,7 @@ export const configCardsPorAba = {
     { key: 'fentanil', type: 'bolus', doseOptionId: 'iot' }, 
     { key: 'midazolam', type: 'bolus',  doseOptionId: 'iot', presentationIndex: 1 }, 
     { key: 'cetamina', type: 'bolus',  doseOptionId: 'iot', presentationIndex: 1 },
-    { key: 'etomidato', type: 'bolus',  doseOptionId: 'iot'},
-    { key: 'rocuronio', type: 'bolus', doseOptionId: 'iot'}
+    { key: 'etomidato', type: 'bolus',  doseOptionId: 'iot'}
   ],
   infusion: [ 
     { key: 'fentanil', type: 'infusion' }, 
