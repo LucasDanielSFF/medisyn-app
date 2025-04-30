@@ -1,28 +1,29 @@
 :root {
-  --bg-dark: #010409;         /* fundo de principal (cinza profundo) */
-  --bg-darker: #0D1117;    /* fundo secundário (cinza escuro) */
+  --bg-dark: #010409;
+  --bg-darker: #0D1117;
   --card-bg-dark: #212830;
-  --text-dark: #F0F3F5;    /* texto em modo escuro (branco) */
+  --text-dark: #F0F3F5;
   --form-bg-dark: #404040;
-  --text-secondary: #9FA6AD;  /* texto secundário em modo escuro (acinzentado) */
-  --accent: #007ACC;       /* cor de destaque principal (azul) */
-  --accent-secondary: #C76C59; /* cor de destaque secundária */
+  --text-secondary: #9FA6AD;
+  --accent: #007ACC;
+  --accent-secondary: #C76C59;
   --slider-bar-dark: #5C5C5C;
   --slider-thumb-dark: #3D637C;
   --error: #FF3860;
 
-  --bg-light: #F8F9FA;         /* fundo principal claro (branco) */
-  --bg-lighter: #E9ECEF;       /* fundo de elementos claros (branco) */
-  --text-light: #343A40;       /* texto em modo claro (preto suave) */
-  --text-secondary-light: #6C757D; /* texto secundário em modo claro (cinza escuro) */
-  --accent-light: #007ACC;     /* cor de destaque principal no claro (azul) */
-  --accent-secondary-light: #A8C0CE; /* cor de destaque secundária no claro */
+  --bg-light: #F8F9FA;
+  --bg-lighter: #E9ECEF;
+  --text-light: #343A40;
+  --text-secondary-light: #6C757D;
+  --accent-light: #007ACC;
+  --accent-secondary-light: #A8C0CE;
   --slider-bar-light: #CED4DA;
   --slider-thumb-light: #5C7C99;
   --error-light: #FF3860;
 }
 
 h1, h2, h3 {
+  font-weight: bold;
   text-align: left !important;
   margin-left: 15px;
 }
