@@ -1,12 +1,12 @@
 :root {
-  --bg-dark: #1A1A1A;         /* fundo de principal (cinza profundo) */
-  --bg-darker: #2B2B2B;    /* fundo secundário (cinza escuro) */
-  --card-bg-dark: #3A3A3A;
+  --bg-dark: #010409;         /* fundo de principal (cinza profundo) */
+  --bg-darker: #0D1117;    /* fundo secundário (cinza escuro) */
+  --card-bg-dark: #212830;
   --text-dark: #F0F3F5;    /* texto em modo escuro (branco) */
   --form-bg-dark: #404040;
   --text-secondary: #9FA6AD;  /* texto secundário em modo escuro (acinzentado) */
   --accent: #007ACC;       /* cor de destaque principal (azul) */
-  --accent-secondary: #6B8EA3; /* cor de destaque secundária */
+  --accent-secondary: #C76C59; /* cor de destaque secundária */
   --slider-bar-dark: #5C5C5C;
   --slider-thumb-dark: #3D637C;
   --error: #FF3860;
