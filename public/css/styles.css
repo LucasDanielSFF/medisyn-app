@@ -23,6 +23,11 @@
 }
 
 h1, h2, h3 {
+  text-align: left !important;
+  margin-left: 15px;
+}
+
+title {
   font-weight: bold;
   text-align: left !important;
   margin-left: 15px;
