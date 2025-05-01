@@ -1,57 +1,58 @@
-// ==================================================
-// ►►► Templates de UI
-// ==================================================
-
-import { calcularValorMedio } from './calculations.js';
+import { calcularValorMedio } from './calculationsShared.js';
 import { medicationsDB } from '../../../data/medicationsDB.js';
 
-export function createBolusUI(medKey, config = {}) {
-  // Acessa os dados específicos do medicamento
-  const med = medicationsDB[medKey]?.admtype?.bolus;
-  
-  // Fallback para erro de carregamento
-  if (!med || !med.dose) {
-    return '<div class="text-danger">Erro ao carregar medicação</div>';
-  }
-
-  const presentationIndex = (typeof config === 'object' && config.presentationIndex !== undefined) 
-  ? config.presentationIndex 
-  : 0;
-
-  const doseOptionsHTML = med.doseOptions 
-  ? med.doseOptions.map(opt => `
-      <option value="${opt.id}" ${config.doseOptionId === opt.id ? 'selected' : ''}>
-        ${opt.label}
-      </option>
-    `).join('')
-  : '';
-
-  // Usa a dose específica se existir, senão usa a padrão
-  const doseConfig = config.doseOptionId 
-  ? med.doseOptions.find(opt => opt.id === config.doseOptionId)
-  : med.dose;
-
-  // Calcula valores iniciais
-  const valorMedio = calcularValorMedio(med.dose.min, med.dose.max);
-  
-  // Gera dinamicamente as opções de medicamentos
-  const optionsMedicacoes = Object.entries(medicationsDB)
-    .map(([key, m]) => m.admtype?.bolus 
-      ? `<option value="${key}" ${key === medKey ? 'selected' : ''}>${m.name}</option>`
+// ====================== HELPER FUNCTIONS ======================
+const getMedOptions = (admType, currentKey) => 
+  Object.entries(medicationsDB)
+    .map(([key, med]) => med.admtype?.[admType] 
+      ? `<option value="${key}" ${key === currentKey ? 'selected' : ''}>${med.name}</option>`
       : ''
     ).join('');
 
-  // Gera dinamicamente as opções de apresentação
-  const optionsApresentacoes = med.presentations
-    .map((p, i) => `<option value="${p.value}" ${i === presentationIndex ? 'selected' : ''}>${p.label}</option>`)
-    .join('');
+const getDoseOptionsHTML = (doseOptions, selectedId) =>
+  doseOptions?.map(opt => `
+    <option value="${opt.id}" ${selectedId === opt.id ? 'selected' : ''}>
+      ${opt.label}
+    </option>
+  `).join('') || '';
+
+const validateMedication = (med, dosePath) => {
+  const admData = med?.admtype?.[dosePath];
+  return admData?.dose ? admData : null;
+};
+
+const buildDoseSection = (doseConfig, valorMedio, cssClass) => `
+  <label class="form-label">
+    Dose: <span class="dose-value">${valorMedio.toFixed(2)}</span>
+    <span class="dose-unit">${doseConfig.unit}</span>
+    <span class="dose-info">(Faixa: ${doseConfig.min} - ${doseConfig.max} ${doseConfig.unit})</span>
+  </label>
+  <input type="range" 
+         class="form-range ${cssClass}-dose-slider" 
+         min="${doseConfig.min}" 
+         max="${doseConfig.max}" 
+         step="${doseConfig.step}" 
+         value="${valorMedio}">
+`;
+
+// ====================== MAIN TEMPLATES ======================
+export function createBolusUI(cardId, medKey, config = {}) {
+  const med = validateMedication(medicationsDB[medKey], 'bolus');
+  if (!med) return '<div class="text-danger">Erro ao carregar medicação</div>';
+
+  const presentationIndex = config.presentationIndex || 0;
+  const doseConfig = config.doseOptionId 
+    ? med.doseOptions.find(opt => opt.id === config.doseOptionId) 
+    : med.dose;
+
+  const valorMedio = calcularValorMedio(doseConfig.min, doseConfig.max);
 
   return `
-    ${(med.doseOptions && !config.isLocked) ? ` <!-- Só mostra se houver opções e não estiver bloqueado -->
-      <div class="mb-3 ${config.isLocked ? 'd-none' : ''}"> <!-- d-none é classe do Bootstrap para esconder -->
+    ${med.doseOptions && !config.isLocked ? `
+      <div class="mb-3">
         <label class="form-label">Perfil de Dose</label>
         <select class="form-select bolus-dose-select">
-          ${doseOptionsHTML}
+          ${getDoseOptionsHTML(med.doseOptions, config.doseOptionId)}
         </select>
       </div>
     ` : ''}
@@ -61,7 +62,7 @@ export function createBolusUI(medKey, config = {}) {
         <div class="mb-3">
           <label class="form-label">Medicação</label>
           <select class="form-select bolus-med-select">
-            ${optionsMedicacoes}
+            ${getMedOptions('bolus', medKey)}
           </select>
         </div>
       </div>
@@ -70,24 +71,16 @@ export function createBolusUI(medKey, config = {}) {
         <div class="mb-3">
           <label class="form-label">Apresentação</label>
           <select class="form-select bolus-pres-select">
-            ${optionsApresentacoes}
+            ${med.presentations.map((p, i) => `
+              <option value="${p.value}" ${i === presentationIndex ? 'selected' : ''}>${p.label}</option>
+            `).join('')}
           </select>
         </div>
       </div>
     </div>
 
     <div class="mb-3">
-      <label class="form-label">
-        Dose: <span class="dose-value">${valorMedio.toFixed(2)}</span>
-        <span class="dose-unit">${doseConfig.unit}</span>
-<span class="dose-info">(Faixa: ${doseConfig.min} - ${doseConfig.max} ${doseConfig.unit})</span>
-      </label>
-      <input type="range" 
-             class="form-range bolus-dose-slider" 
-             min="${med.dose.min}" 
-             max="${med.dose.max}" 
-             step="${med.dose.step}" 
-             value="${valorMedio}">
+      ${buildDoseSection(doseConfig, valorMedio, 'bolus')}
     </div>
 
     <div class="resultado-container">
@@ -98,71 +91,49 @@ export function createBolusUI(medKey, config = {}) {
   `;
 }
 
-export function createInfusionUI(medKey, config = {}) {
-  const med = medicationsDB[medKey]?.admtype?.infusion;
-  
-  if (!med || !med.dose) {
-    return '<div class="text-danger">Erro ao carregar medicação</div>';
-  }
+export function createInfusionUI(cardId, medKey, config = {}) {
+  const med = validateMedication(medicationsDB[medKey], 'infusion');
+  if (!med) return '<div class="text-danger">Erro ao carregar medicação</div>';
 
-  // Obter dose configurada
   const doseConfig = config.doseOptionId 
-    ? med.doseOptions?.find(opt => opt.id === config.doseOptionId)
+    ? med.doseOptions?.find(opt => opt.id === config.doseOptionId) 
     : med.dose;
 
-  // Verifica se a unidade é baseada em tempo (min/h)
-  const unitParts = doseConfig.unit.split('/');
-  const timePart = unitParts.pop();
-  const canToggle = ['min', 'h'].includes(timePart);
-  const timeUnitHTML = canToggle ? `
-    <div class="col-md-4">
-      <div class="mb-3">
+  const diluicao = med.diluicoes[0] || {};
+  const [massUnit, timeUnit] = doseConfig.unit.split('/');
+  const valorMedio = calcularValorMedio(doseConfig.min, doseConfig.max);
+  const canToggle = ['min', 'h'].includes(timeUnit);
+
+  const unitControlsHTML = config.showUnitControls ? `
+    <div class="row mb-3">
+      <div class="col-3">
+        <div class="mb-1">
+          <label class="form-label">Unidade de Massa</label>
+          <select class="form-select infusion-mass-unit">
+            <option value="mcg" ${massUnit === 'mcg' ? 'selected' : ''}>mcg</option>
+            <option value="mg" ${massUnit === 'mg' ? 'selected' : ''}>mg</option>
+            <option value="g" ${massUnit === 'g' ? 'selected' : ''}>g</option>
+          </select>
+        </div>
+      </div>
+      ${canToggle ? `
+      <div class="col-3">
         <label class="form-label">Unidade de Tempo</label>
         <select class="form-select infusion-time-unit">
-          <option value="min" ${timePart === 'min' ? 'selected' : ''}>${unitParts.join('/')}/min</option>
-          <option value="h" ${timePart === 'h' ? 'selected' : ''}>${unitParts.join('/')}/h</option>
+          <option value="min" ${timeUnit === 'min' ? 'selected' : ''}>/min</option>
+          <option value="h" ${timeUnit === 'h' ? 'selected' : ''}>/h</option>
         </select>
-      </div>
+      </div>` : ''}
     </div>
   ` : '';
 
-  const valorMedio = calcularValorMedio(doseConfig.min, doseConfig.max);
-  const primeiraDiluicao = med.diluicoes[0] || {};
-
-  // Geração de opções de dose
-  const doseOptionsHTML = med.doseOptions 
-    ? med.doseOptions.map(opt => `
-        <option value="${opt.id}" ${config.doseOptionId === opt.id ? 'selected' : ''}>
-          ${opt.label}
-        </option>
-      `).join('')
-    : '';
-
   return `
-    ${canToggle ? `
-      <div class="row">
-        ${timeUnitHTML}
-      </div>
-    ` : ''}
-    ${(med.doseOptions && !config.isLocked) ? `
-      <div class="mb-3 ${config.isLocked ? 'd-none' : ''}">
-        <label class="form-label">Perfil de Dose</label>
-        <select class="form-select infusion-dose-select">
-          ${doseOptionsHTML}
-        </select>
-      </div>
-    ` : ''}
-
     <div class="row">
       <div class="col-md-6">
         <div class="mb-3">
           <label class="form-label">Medicação</label>
           <select class="form-select infusion-med-select">
-            ${Object.entries(medicationsDB)
-              .map(([key, m]) => m.admtype?.infusion 
-                ? `<option value="${key}" ${key === medKey ? 'selected' : ''}>${m.name}</option>`
-                : '')
-              .join('')}
+            ${getMedOptions('infusion', medKey)}
           </select>
         </div>
       </div>
@@ -172,12 +143,12 @@ export function createInfusionUI(medKey, config = {}) {
           <div class="flex-grow-1">
             <label class="form-label">Diluição</label>
             <select class="form-select infusion-dilution-select">
-              ${med.diluicoes
-                .map((d, i) => `<option value="${i}">${d.label}</option>`)
-                .join('')}
+              ${med.diluicoes.map((d, i) => `
+                <option value="${i}">${d.label}</option>
+              `).join('')}
             </select>
           </div>
-          <button class="btn btn-accent btn-custom-dilution d-flex align-items-center gap-2" type="button">
+          <button class="btn btn-accent btn-custom-dilution">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
               <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
             </svg>
@@ -186,54 +157,53 @@ export function createInfusionUI(medKey, config = {}) {
       </div>
     </div>
 
-    <div class="row g-3">
+    <div class="row g-2">
       <div class="col-md-4">
         <div class="mb-3">
           <label class="form-label">Medicamento (mL)</label>
           <input type="number" 
                  class="form-control infusion-med-volume" 
-                 value="${primeiraDiluicao.medVolume || 10}">
+                 value="${diluicao.medVolume || 10}">
         </div>
       </div>
-
       <div class="col-md-4">
         <div class="mb-3">
           <label class="form-label">Concentração</label>
           <div class="input-group">
             <input type="number"
                    class="form-control infusion-conc-value"
-                   value="${primeiraDiluicao.concValue || 50}">
+                   value="${diluicao.concValue || 50}">
             <select class="form-select infusion-conc-unit">
-              <option value="mcg" ${primeiraDiluicao.concUnit === 'mcg' ? 'selected' : ''}>mcg/mL</option>
-              <option value="mg" ${primeiraDiluicao.concUnit === 'mg' ? 'selected' : ''}>mg/mL</option>
-              <option value="g" ${primeiraDiluicao.concUnit === 'g' ? 'selected' : ''}>g/mL</option>
+              <option value="mcg/mL" ${diluicao.concUnit === 'mcg/mL' ? 'selected' : ''}>mcg/mL</option>
+              <option value="mg/mL" ${diluicao.concUnit === 'mg/mL' ? 'selected' : ''}>mg/mL</option>
+              <option value="g/mL" ${diluicao.concUnit === 'g/mL' ? 'selected' : ''}>g/mL</option>
             </select>
           </div>
         </div>
       </div>
-
       <div class="col-md-4">
         <div class="mb-3">
           <label class="form-label">Solução (mL)</label>
           <input type="number"
                  class="form-control infusion-sol-volume"
-                 value="${primeiraDiluicao.solVolume || 50}">
+                 value="${diluicao.solVolume || 50}">
         </div>
       </div>
     </div>
 
-    <div class="mb-3">
-      <label class="form-label">
-        Dose: <span class="dose-value">${valorMedio.toFixed(2)}</span>
-        <span class="dose-unit">${doseConfig.unit}</span>
-        <span class="dose-info">(Faixa: ${doseConfig.min} - ${doseConfig.max} ${doseConfig.unit})</span>
-      </label>
-      <input type="range"
-             class="form-range infusion-dose-slider"
-             min="${doseConfig.min}"
-             max="${doseConfig.max}"
-             step="${doseConfig.step}"
-             value="${valorMedio}">
+    ${unitControlsHTML}
+
+    ${med.doseOptions && !config.isLocked ? `
+      <div class="mb-3">
+        <label class="form-label">Perfil de Dose</label>
+        <select class="form-select infusion-dose-select">
+          ${getDoseOptionsHTML(med.doseOptions, config.doseOptionId)}
+        </select>
+      </div>
+    ` : ''}
+
+    <div class="mb-3 dose-section">
+      ${buildDoseSection(doseConfig, valorMedio, 'infusion')}
     </div>
 
     <div class="resultado-container">
@@ -241,8 +211,27 @@ export function createInfusionUI(medKey, config = {}) {
         <span class="flow-result">0.00</span> mL/h
       </p>
       <small class="dose-info">
-        Concentração final: <span class="final-conc">0.00</span> µg/mL
+        Concentração final: <span class="final-conc">0.00</span>
       </small>
+    </div>
+
+    <button class="btn btn-toggle-reverse btn-sm mt-2">▼ Cálculo Reverso</button>
+
+    <div class="reverse-calculation mt-4 hidden">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label class="form-label">Vazão (mL/h)</label>
+            <input type="number" class="form-control reverse-flow-input">
+          </div>
+        </div>
+      </div>
+      <p class="resultado-container">
+        Dose calculada: 
+        <span class="reverse-dose-result">0.00</span> 
+        <span class="dose-unit">${doseConfig.unit}</span>
+        <span class="dose-info-reverse">(Faixa: ${doseConfig.min} - ${doseConfig.max} ${doseConfig.unit})</span>
+      </p>
     </div>
   `;
 }

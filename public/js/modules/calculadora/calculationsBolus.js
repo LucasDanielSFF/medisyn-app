@@ -29,7 +29,6 @@ export function calcularBolus(cardId) {
 
   const volume = doseTotalMcg / concentracao;
 
-  // Atualizar UI
   card.querySelector('.volume-result').textContent = volume.toFixed(2);
   card.querySelector('.dose-value').textContent = dose.toFixed(2);
 }

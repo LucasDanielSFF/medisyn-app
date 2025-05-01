@@ -68,6 +68,48 @@ export function carregarCardsAutomaticos(aba) {
   });
 }
 
+export function initCard(cardId, medKey, config, type, selectors) {
+  const card = document.getElementById(cardId);
+  const selectMed = card.querySelector(selectors.medSelect);
+  const med = medicationsDB[medKey]?.admtype?.[type];
+
+  if (!med) {
+    console.error(`Medicação "${medKey}" não possui configuração válida para ${type}.`);
+    return;
+  }
+
+  // Configuração de dose
+  const doseConfig = config.doseOptionId 
+    ? med.doseOptions.find(opt => opt.id === config.doseOptionId)
+    : med.dose;
+
+  const valorMedio = calcularValorMedio(doseConfig.min, doseConfig.max);
+  updateSliderAndUI(card, doseConfig, valorMedio, type);
+
+  // Event listeners genéricos
+  const doseSelect = card.querySelector(selectors.doseSelect);
+  if (doseSelect && !config.isLocked) {
+    doseSelect.addEventListener('change', () => {
+      const newDoseId = doseSelect.value;
+      const newDose = med.doseOptions.find(opt => opt.id === newDoseId);
+      updateSliderAndUI(card, newDose, calcularValorMedio(newDose.min, newDose.max), type);
+      selectors.calcularFunction(cardId);
+    });
+  }
+
+  selectMed.addEventListener('change', () => {
+    updateCardContent(cardId, type, selectMed.value, config);
+  });
+
+  // Listeners de input
+  card.querySelectorAll(selectors.inputElements).forEach(el => 
+    el.addEventListener('input', () => selectors.calcularFunction(cardId))
+  );
+
+  // Cálculo inicial
+  selectors.calcularFunction(cardId);
+}
+
 export function changeCardType(cardId, newType) {
   const initialMedKey = Object.keys(medicationsDB).find(key => 
     medicationsDB[key]?.admtype?.[newType]

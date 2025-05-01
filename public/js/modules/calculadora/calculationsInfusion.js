@@ -4,8 +4,6 @@ import { convertToMcg, convertMassUnit,formatConcentration } from './calculation
 
 export function calcularInfusion(cardId, doseOverride = null) {
   const card = document.getElementById(cardId);
-  if (!card) return;
-
   const weight = getGlobalWeight();
   
   const elements = {
@@ -47,7 +45,7 @@ export function calcularInfusion(cardId, doseOverride = null) {
   try {
     const originalUnitParts = doseConfig.unit.split('/');
     const baseUnit = originalUnitParts.find(p => ['mcg', 'mg', 'g'].includes(p)) || 'mcg';
-    const originalTimePart = originalUnitParts.pop(); // Extrai 'h' ou 'min' da unidade original
+    const originalTimePart = originalUnitParts.pop();
   
     const selectedMassUnit = elements.massUnit?.value || baseUnit;
     const timeUnit = elements.timeUnit?.value || originalTimePart;
@@ -117,14 +115,42 @@ export function calcularInfusion(cardId, doseOverride = null) {
 export function calcularDoseReverso(cardId) {
   const card = document.getElementById(cardId);
   const weight = getGlobalWeight();
-  
-  const flowRate = parseFloat(card.querySelector('.reverse-flow-input').value);
-  const concentration = parseFloat(card.querySelector('.infusion-conc-value').value);
+
+  const elements = {
+    medSelect: card.querySelector('.infusion-med-select'),
+    doseSelect: card.querySelector('.infusion-dose-select'),
+    reverseFlowInput: card.querySelector('.reverse-flow-input')
+  };
+
+  const medInfusion = medicationsDB[elements.medSelect?.value]?.admtype?.infusion;
+  if (!medInfusion) return;
+
+  const doseConfig = medInfusion.doseOptions?.find(opt => opt.id === elements.doseSelect?.value) || medInfusion.dose;
+  const doseTimeUnit = doseConfig.unit.split('/').pop(); // Extrai 'min' ou 'h'
+
+  // Obter dados de diluição
+  const medVolume = Number(card.querySelector('.infusion-med-volume').value) || 0;
+  const solVolume = Number(card.querySelector('.infusion-sol-volume').value) || 0;
+  const concValue = Number(card.querySelector('.infusion-conc-value').value) || 0;
   const concUnit = card.querySelector('.infusion-conc-unit').value;
-  
-  const concentracaoMcgML = convertToMcg(concentration, concUnit);
-  
-  const dose = (flowRate * concentracaoMcgML) / weight;
-  
+
+  // Calcular concentração final (mcg/mL)
+  const totalVolume = medVolume + solVolume || 0.1;
+  const concMcgPerMl = convertToMcg(concValue, concUnit);
+  const totalDrug = medVolume * concMcgPerMl;
+  const finalConcentration = totalDrug / totalVolume;
+
+  // Calcular dose
+  const flowRate = parseFloat(elements.reverseFlowInput.value) || 0;
+  let dose;
+
+  if (doseTimeUnit === 'min') {
+    dose = ( (flowRate / 60) * finalConcentration ) / weight; // mL/h → mL/min
+  } else {
+    dose = (flowRate * finalConcentration) / weight; // mL/h
+  }
+
+  // Atualizar UI
   card.querySelector('.reverse-dose-result').textContent = dose.toFixed(2);
+  card.querySelector('.dose-info').textContent = `(Faixa: ${doseConfig.min} - ${doseConfig.max} ${doseConfig.unit})`;
 }
