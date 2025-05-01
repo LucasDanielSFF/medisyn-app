@@ -40,9 +40,13 @@ export const configCardsPorAba = {
    /* doseOptionId: 'padrao', // Define um ID padrão (opcional, ajuste conforme necessário)*/
     presentationIndex: 0 // Assume primeira apresentação como padrão
     })),
-  bolus: [ 
-    { key: 'fentanil', type: 'bolus' }, 
-    { key: 'midazolam', type: 'bolus', presentationIndex: 0 } 
-  ],
+  bolus: Object.keys(medicationsDB)
+  .filter(medKey => medicationsDB[medKey].admtype?.infusion)
+  .map(medKey => ({
+    key: medKey,
+    type: 'bolus',
+   /* doseOptionId: 'padrao', // Define um ID padrão (opcional, ajuste conforme necessário)*/
+    presentationIndex: 0 // Assume primeira apresentação como padrão
+    })),
   universal: []
 };
