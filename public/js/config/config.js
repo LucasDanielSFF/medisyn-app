@@ -27,7 +27,7 @@ export const cardStrategies = {
 
 export const configCardsPorAba = {
   iot: [ 
-    { key: 'fentanil', type: 'bolus', doseOptionId: 'iot' }, 
+    { key: 'fentanila', type: 'bolus', doseOptionId: 'iot' }, 
     { key: 'midazolam', type: 'bolus',  doseOptionId: 'iot', presentationIndex: 1 }, 
     { key: 'cetamina', type: 'bolus',  doseOptionId: 'iot', presentationIndex: 1 },
     { key: 'etomidato', type: 'bolus',  doseOptionId: 'iot'},
