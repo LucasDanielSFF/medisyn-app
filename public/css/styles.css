@@ -387,7 +387,7 @@ body.modo-claro #global-weight .input-group-text {
   margin-bottom: 0.5rem;
 }
 
-.dose-value {
+.dose-value, .reverse-dose-result {
   font-weight: bold;
   color: var(--accent);
   transition: color 0.3s ease;
@@ -397,4 +397,20 @@ body.modo-claro #global-weight .input-group-text {
   0%, 100% { transform: translateX(0); }
   25% { transform: translateX(-5px); }
   75% { transform: translateX(5px); }
+}
+
+.hidden {
+  display: none !important;
+}
+
+.btn-toggle-reverse {
+  background: none;
+  border: 1px solid #ddd;
+  color: #666;
+  padding: 0.25rem 0.5rem;
+}
+
+.reverse-calculation {
+  border-top: 1px solid #eee;
+  padding-top: 1rem;
 }
