@@ -5,6 +5,7 @@
 import { createInfusionUI , createBolusUI } from '../modules/calculadora/uiTemplates.js'
 import { initBolusCard } from '../modules/calculadora/cardManagerBolus.js';
 import { initInfusionCard } from '../modules/calculadora/cardManagerInfusion.js';
+import { medicationsDB } from '../../data/medicationsDB.js'; // Ajuste o caminho conforme necessário
 
 export const configAba = {
   iot: { addButton: false, removable: false },
@@ -31,10 +32,14 @@ export const configCardsPorAba = {
     { key: 'cetamina', type: 'bolus',  doseOptionId: 'iot', presentationIndex: 1 },
     { key: 'etomidato', type: 'bolus',  doseOptionId: 'iot'}
   ],
-  infusion: [ 
-    { key: 'fentanil', type: 'infusion' }, 
-    { key: 'dexmedetomidina', type: 'infusion', doseOptionId: 'padrao', isLocked: true, presentationIndex: 0 } 
-  ],
+  infusion: Object.keys(medicationsDB)
+  .filter(medKey => medicationsDB[medKey].admtype?.infusion)
+  .map(medKey => ({
+    key: medKey,
+    type: 'infusion',
+   /* doseOptionId: 'padrao', // Define um ID padrão (opcional, ajuste conforme necessário)*/
+    presentationIndex: 0 // Assume primeira apresentação como padrão
+    })),
   bolus: [ 
     { key: 'fentanil', type: 'bolus' }, 
     { key: 'midazolam', type: 'bolus', presentationIndex: 0 } 
