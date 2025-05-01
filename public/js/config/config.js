@@ -2,8 +2,7 @@
 // ►►► Configurações gerais
 // ==================================================
 
-import { createInfusionUI } from '../modules/calculadora/uiTemplatesInfusion.js';
-import { createBolusUI } from '../modules/calculadora/uiTemplatesBolus.js'
+import { createInfusionUI , createBolusUI } from '../modules/calculadora/uiTemplates.js'
 import { initBolusCard } from '../modules/calculadora/cardManagerBolus.js';
 import { initInfusionCard } from '../modules/calculadora/cardManagerInfusion.js';
 
@@ -34,7 +33,7 @@ export const configCardsPorAba = {
   ],
   infusion: [ 
     { key: 'fentanil', type: 'infusion' }, 
-    { key: 'dexmedetomidina', type: 'infusion', doseOptionId: 'pos-operatorio', isLocked: true, presentationIndex: 0 } 
+    { key: 'dexmedetomidina', type: 'infusion', doseOptionId: 'padrao', isLocked: true, presentationIndex: 0 } 
   ],
   bolus: [ 
     { key: 'fentanil', type: 'bolus' }, 
