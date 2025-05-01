@@ -1,5 +1,5 @@
 const CACHE_VERSION = 'v1';
-const CACHE_NAME = "medisyn-pwa-7a5cf9284fe1"; // Será substituído pelo script
+const CACHE_NAME = "medisyn-pwa-b026d4bf6d29"; // Será substituído pelo script
 
 const urlsToCache = [
   "../index.html",
