@@ -2,7 +2,7 @@ export const DB_VERSION = '0.2.0';
 export const medicationsDB = {
   cetamina: {
     id: 'cetamina',
-    name: 'Cloridrato de Cetamina',
+    name: 'Cetamina',
     admtype: {
       bolus: {
         presentations: [
@@ -50,8 +50,8 @@ export const medicationsDB = {
     }
   },
   fentanil: {
-    id: 'fentanil',
-    name: 'Citrato de Fentanila',
+    id: 'fentanila',
+    name: 'Fentanila',
     admtype: {
       bolus: {
         presentations: [
@@ -65,8 +65,8 @@ export const medicationsDB = {
       infusion: {
         dose: { min: 0.3, max: 3, step: 0.1, unit: 'mcg/kg/h' },
         diluicoes: [
-          { label: 'Padrão 1 (50mL SF)', medVolume: 50, solVolume: 50, concValue: 50, concUnit: 'mcg/mL' },
-          { label: 'Padrão 2 (80mL SF)', medVolume: 20, solVolume: 80, concValue: 50, concUnit: 'mcg/mL' }
+          { label: '40mL + 160mL de SF 0,9%', medVolume: 40, solVolume: 160, concValue: 50, concUnit: 'mcg/mL' },
+          { label: '40mL + 160mL de SF 0,9%', medVolume: 80, solVolume: 120, concValue: 50, concUnit: 'mcg/mL' }
         ]
       }
     }
@@ -142,8 +142,8 @@ export const medicationsDB = {
         ],
         dose: { min: 3, max: 3, step: 0.1, unit: 'mg/kg/h' },
         diluicoes: [
-          { label: '20mL', medVolume: 1, solVolume: 19, concValue: 20, concUnit: 'mg/mL' },
-          { label: '40mL', medVolume: 1, solVolume: 39, concValue: 10, concUnit: 'mg/mL' }
+          { label: '1mL + 19mL ABD', medVolume: 1, solVolume: 19, concValue: 20, concUnit: 'mg/mL' },
+          { label: '1mL + 39mL ABD', medVolume: 1, solVolume: 39, concValue: 10, concUnit: 'mg/mL' }
         ]
       }
     }
