@@ -49,7 +49,7 @@ export const medicationsDB = {
       },
     }
   },
-  fentanil: {
+  fentanila: {
     id: 'fentanila',
     name: 'Fentanila',
     admtype: {
