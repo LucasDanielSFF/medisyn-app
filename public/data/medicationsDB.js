@@ -110,8 +110,8 @@ export const medicationsDB = {
       infusion: {
         dose: { min: 0.1, max: 5, step: 0.1, unit: 'mcg/kg/min' },
         diluicoes: [
-          { label: '20mL + 180mL SF 0,9%', medVolume: 20, solVolume: 180, concValue: 1000, concUnit: 'mcg/mL' },
-          { label: 'Padrão 2 (80mL SF)', medVolume: 20, solVolume: 80, concValue: 50, concUnit: 'mcg/mL' }
+          { label: '20mL + 180mL SF 0,9%', medVolume: 20, solVolume: 180, concValue: 1, concUnit: 'mg/mL' },
+          { label: '16mL + 234mL SG 5%)', medVolume: 16, solVolume: 234, concValue: 1, concUnit: 'mg/mL' }
         ]
       }
     }
