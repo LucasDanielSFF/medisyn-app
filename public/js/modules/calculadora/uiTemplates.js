@@ -202,6 +202,43 @@ export function createInfusionUI(cardId, medKey, config = {}) {
       </div>
     ` : ''}
 
+    ${config.showUnitControls ? `
+    <div class="unit-controls bg-light p-3 rounded mb-3">
+      <h6 class="mb-3">Conversão de Unidades</h6>
+      <div class="row g-3">
+        <div class="col-md-4">
+          <label class="form-label">Unidade Base Original</label>
+          <div class="form-control-plaintext">
+            ${baseUnit}/${originalTimePart}
+          </div>
+        </div>
+        
+        <div class="col-md-4">
+          <label class="form-label">Nova Unidade de Massa</label>
+          <select class="form-select infusion-mass-unit">
+            <option value="mcg" ${massUnit === 'mcg' ? 'selected' : ''}>mcg</option>
+            <option value="mg" ${massUnit === 'mg' ? 'selected' : ''}>mg</option>
+            <option value="g" ${massUnit === 'g' ? 'selected' : ''}>g</option>
+          </select>
+        </div>
+
+        ${canToggle ? `
+        <div class="col-md-4">
+          <label class="form-label">Nova Unidade de Tempo</label>
+          <select class="form-select infusion-time-unit">
+            <option value="min" ${timeUnit === 'min' ? 'selected' : ''}>minuto</option>
+            <option value="h" ${timeUnit === 'h' ? 'selected' : ''}>hora</option>
+          </select>
+        </div>` : ''}
+      </div>
+      
+      <small class="text-muted mt-2 d-block">
+        A conversão mantém equivalência terapêutica automática
+      </small>
+    </div>
+    ` : ''}
+
+
     <div class="mb-3 dose-section">
       ${buildDoseSection(doseConfig, valorMedio, 'infusion')}
     </div>

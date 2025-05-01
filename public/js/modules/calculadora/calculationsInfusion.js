@@ -44,27 +44,37 @@ export function calcularInfusion(cardId, doseOverride = null) {
 
   try {
     const originalUnitParts = doseConfig.unit.split('/');
-    const baseUnit = originalUnitParts.find(p => ['mcg', 'mg', 'g'].includes(p)) || 'mcg';
-    const originalTimePart = originalUnitParts.pop();
-  
+    
+    // 1. Determinar unidades originais da medicação
+    baseUnit = originalUnitParts.find(p => ['mcg', 'mg', 'g'].includes(p)) || 'mcg';
+    originalTimePart = originalUnitParts[originalUnitParts.length - 1]; // Última parte é tempo
+    
+    // 2. Obter unidades selecionadas pelo usuário
     const selectedMassUnit = elements.massUnit?.value || baseUnit;
-    const timeUnit = elements.timeUnit?.value || originalTimePart;
+    const selectedTimeUnit = elements.timeUnit?.value || originalTimePart;
 
-    if (selectedMassUnit && baseUnit && selectedMassUnit !== baseUnit) {
+    // 3. Converter unidade de massa se necessário
+    if (selectedMassUnit !== baseUnit) {
       dose = convertMassUnit(
-        Math.min(Math.max(dose, doseConfig.min), 
-        baseUnit, 
+        dose,
+        baseUnit,
         selectedMassUnit
-      ));
+      );
     }
- 
-    if (timeUnit !== originalTimePart) {
-      if (originalTimePart === 'min' && timeUnit === 'h') {
-        dose = Math.min(dose * 60, doseConfig.max * 60);
-      } else if (originalTimePart === 'h' && timeUnit === 'min') {
-        dose = Math.max(dose / 60, doseConfig.min / 60);
+
+    // 4. Converter unidade de tempo se necessário
+    if (selectedTimeUnit !== originalTimePart) {
+      if (originalTimePart === 'min' && selectedTimeUnit === 'h') {
+        dose = dose * 60; // min → hora
+      } else if (originalTimePart === 'h' && selectedTimeUnit === 'min') {
+        dose = dose / 60; // hora → min
       }
     }
+
+    // 5. Garantir limites da dose após conversão
+    const convertedMin = convertMassUnit(doseConfig.min, baseUnit, selectedMassUnit);
+    const convertedMax = convertMassUnit(doseConfig.max, baseUnit, selectedMassUnit);
+    dose = Math.min(Math.max(dose, convertedMin), convertedMax);
 
   } catch (error) {
     console.error('Erro na conversão de unidades:', error);

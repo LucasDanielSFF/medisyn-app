@@ -88,6 +88,16 @@ export function initInfusionCard(cardId, medKey, config = {}) {
     });
   };
 
+  card.querySelector('.infusion-mass-unit')?.addEventListener('change', () => {
+    calcularInfusion(cardId);
+    updateConcentrationUnits();
+  });
+  
+  card.querySelector('.infusion-time-unit')?.addEventListener('change', () => {
+    calcularInfusion(cardId);
+    updateConcentrationUnits();
+  });
+
   timeUnitSelect?.addEventListener('change', updateConcentrationUnits);
   massUnitSelect?.addEventListener('change', updateConcentrationUnits);
 }
