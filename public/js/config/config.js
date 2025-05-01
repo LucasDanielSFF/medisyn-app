@@ -30,7 +30,8 @@ export const configCardsPorAba = {
     { key: 'fentanil', type: 'bolus', doseOptionId: 'iot' }, 
     { key: 'midazolam', type: 'bolus',  doseOptionId: 'iot', presentationIndex: 1 }, 
     { key: 'cetamina', type: 'bolus',  doseOptionId: 'iot', presentationIndex: 1 },
-    { key: 'etomidato', type: 'bolus',  doseOptionId: 'iot'}
+    { key: 'etomidato', type: 'bolus',  doseOptionId: 'iot'},
+    { key: 'rocuronio', type: 'bolus', doseOptionId: 'iot'}
   ],
   infusion: Object.keys(medicationsDB)
   .filter(medKey => medicationsDB[medKey].admtype?.infusion)
@@ -41,7 +42,7 @@ export const configCardsPorAba = {
     presentationIndex: 0 // Assume primeira apresentação como padrão
     })),
   bolus: Object.keys(medicationsDB)
-  .filter(medKey => medicationsDB[medKey].admtype?.infusion)
+  .filter(medKey => medicationsDB[medKey].admtype?.bolus)
   .map(medKey => ({
     key: medKey,
     type: 'bolus',
