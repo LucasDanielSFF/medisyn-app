@@ -45,6 +45,22 @@ export const medicationsDB = {
       }
     }
   },
+  dobutamina: {
+    id: 'dobutamima',
+    name: 'Dobutamina',
+    admtype: {
+      infusion: {
+        doseOptions: [
+          { id: 'padrao', label: 'Dose Padrão (0.2-1.4 mcg/kg/h)', min: 0.25, max: 20, step: 0.01, unit: 'mcg/kg/min' }
+        ],
+        dose: { min: 0.25, max: 20, step: 0.01, unit: 'mcg/kg/min' },
+        diluicoes: [
+          { label: '20mL + 230 mL SF 0.9%', medVolume: 20, solVolume: 230, concValue: 12,5, concUnit: 'mg/mL' },
+          { label: '40mL + 210 mL SF 0.9%', medVolume: 40, solVolume: 210, concValue: 12,5, concUnit: 'mg/mL' }
+        ]
+      }
+    }
+  },
   etomidato: {
     id: 'etomidato',
     name: 'Etomidato',
@@ -99,8 +115,8 @@ export const medicationsDB = {
       infusion: {
         dose: { min: 0.02, max: 0.2, step: 0.01, unit: 'mg/kg/h' },
         diluicoes: [
-          { label: '40mL + 160mL (SF)', medVolume: 40, solVolume: 160, concValue: 5, concUnit: 'mg/mL' },
-          { label: 'Midazolam 15mg/50mL (SF)', medVolume: 15, solVolume: 50, concValue: 3, concUnit: 'mg/mL' }
+          { label: '40mL (5mg/mL) + 160mL SF 0.9%', medVolume: 40, solVolume: 160, concValue: 5, concUnit: 'mg/mL' },
+          { label: '15mL (5mg/mL) + 50mL SF 0.9%', medVolume: 15, solVolume: 50, concValue: 5, concUnit: 'mg/mL' }
         ]
       }
     }
