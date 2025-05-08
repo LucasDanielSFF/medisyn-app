@@ -133,10 +133,10 @@ export const medicationsDB = {
         doseOptions: [
           { id: 'iot', label: 'Intubação Orotraqueal - SRI (1 - 3 mcg/kg)', min: 1, max: 3, step: 0.01, unit: 'mcg' }
         ],
-        dose: { min: 0.05, max: 2, step: 0.001, unit: 'mcg/kg' }
+        dose: { min: 0.05, max: 3.3, step: 0.001, unit: 'mcg/kg' }
       },
       infusion: {
-        dose: { min: 0.1, max: 5, step: 0.01, unit: 'mcg/kg/min' },
+        dose: { min: 0.05, max: 3.3, step: 0.01, unit: 'mcg/kg/min' },
         diluicoes: [
           { label: '20mL + 180mL SF 0.9%', medVolume: 20, solVolume: 180, concValue: 1, concUnit: 'mg/mL' },
           { label: '16mL + 234mL SG 5%)', medVolume: 16, solVolume: 234, concValue: 1, concUnit: 'mg/mL' }
