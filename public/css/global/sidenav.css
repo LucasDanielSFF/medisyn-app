@@ -1,0 +1,77 @@
+.sidenav.open + .hamburger {
+  left: 250px;
+  transition: left 0.3s ease, transform 0.3s ease;
+}
+
+.hamburger {
+  position: sticky;
+  top: 15px;
+  left: 15px;
+  z-index: 3100;
+  transition: left 0.3s ease, transform 0.3s ease;
+}
+
+.hamburger-inner,
+.hamburger-inner::before,
+.hamburger-inner::after,
+.hamburger.is-active .hamburger-inner,
+.hamburger.is-active .hamburger-inner::before,
+.hamburger.is-active .hamburger-inner::after {
+background-color: var(--text-dark) !important;
+}
+
+body.modo-claro .hamburger-inner,
+body.modo-claro .hamburger-inner::before,
+body.modo-claro .hamburger-inner::after {
+  background-color: var(--text-light) !important;
+}
+
+body.modo-claro .hamburger.is-active .hamburger-inner,
+body.modo-claro .hamburger.is-active .hamburger-inner::before,
+body.modo-claro .hamburger.is-active .hamburger-inner::after {
+background-color: var(--text-dark) !important;
+}
+
+.btn-menu-item {
+  display: block;
+  padding: 12px 20px;
+  margin: 8px 0;
+  background-color: var(--bg-darker);
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+  font-weight: 500;
+}
+
+.btn-menu-item:hover {
+  background-color: var(--accent);
+  transform: translateX(5px);
+  border-color: rgba(255,255,255,0.1);
+}
+
+body.modo-claro .btn-menu-item {
+  background-color: var(--bg-lighter);
+  color: var(--text-light);
+}
+
+body.modo-claro .btn-menu-item:hover {
+  background-color: var(--accent-light);
+  color: white;
+}
+
+.sidenav {
+  padding: 80px 15px 20px;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+  border-right: 1px solid var(--accent);
+}
+
+.sidenav.open {
+  transform: translateX(0);
+  animation: slideIn 0.3s cubic-bezier(0.25, 0.65, 0.45, 0.90);
+}
+
+@keyframes slideIn {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
